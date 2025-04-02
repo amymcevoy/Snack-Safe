@@ -6,14 +6,19 @@ import { RegisterPage } from './pages/register/register.page';
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full'
+  },
+  {
+    path:'auth',
     component: AuthPage
   },
   {
     path: 'login',
-    component: LoginPage
+    loadComponent: () => import('./pages/login/login.page').then(m => m.LoginPage)
   },
   {
     path: 'register',
-    component: RegisterPage
+    loadComponent: () => import('./pages/register/register.page').then(m => m.RegisterPage)
   }
 ];
