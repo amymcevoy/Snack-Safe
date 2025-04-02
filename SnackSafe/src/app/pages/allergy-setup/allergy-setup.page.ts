@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar ,IonCheckbox,IonItem,IonList,IonLabel,IonButton} from '@ionic/angular/standalone';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+
+import { inject } from '@angular/core';
+import { Auth, getAuth } from '@angular/fire/auth';
+import { Firestore, getFirestore, doc, setDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-allergy-setup',
@@ -27,24 +29,20 @@ export class AllergySetupPage{
   
   selectedAllergens: { [key: string]: boolean } = {};
 
-  constructor(
-    private afAuth: AngularFireAuth,
-    private firestore: AngularFirestore
-  ) {}
 
   async save() {
+
+    const auth = getAuth();
+    const firestore = getFirestore();
+  
     const chosen = Object.keys(this.selectedAllergens).filter(key => this.selectedAllergens[key]);
-    const user = await this.afAuth.currentUser;
+    const user = auth.currentUser;
 
     if (user) {
-      await this.firestore
-        .collection('users')
-        .doc(user.uid)
-        .set({ allergens: chosen }, { merge: true });
+      const userDoc = doc(firestore, 'users', user.uid);
+      await setDoc(userDoc, { allergens: chosen }, { merge: true });
 
     console.log('Selected allergens:', chosen);
   }
-
   }
 }
-
