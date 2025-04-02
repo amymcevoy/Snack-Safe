@@ -1,5 +1,55 @@
-:host {
+.home-bg
+{
+    --background: #c5d7d6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 16px;
+}
+
+.logo-wrapper
+{
+    display: flex;
+    flex-direction: column;  
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.logo-img
+{
+    width: 350px;
+    height: auto;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.AccountBtn
+{
+    --background: #092c3e;
+    --color: #ffffff;
+    align-items: center;
+    font-size: 18px;
+    margin: 16px 0;
+    width:80%;
+    border-radius: 10px;
+    margin: 16px auto;
     display: block;
-    background-color: white;
-  }
+}
+
+.loginlink 
+{
+    color: #092c3e;
+    font-size: 14px;
+    margin-top: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.link
+{
+    text-decoration: underline;
+    cursor: pointer;
+}
   
