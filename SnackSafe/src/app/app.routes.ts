@@ -36,5 +36,9 @@ export const routes: Routes = [
   {
     path: 'saved',
     loadComponent: () => import('./pages/saved/saved.page').then( m => m.SavedPage)
+  },
+  {
+    path: 'allergy-setup',
+    loadComponent: () => import('./pages/allergy-setup/allergy-setup.page').then( m => m.AllergySetupPage)
   }
 ];
