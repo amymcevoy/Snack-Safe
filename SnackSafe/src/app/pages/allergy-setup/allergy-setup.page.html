@@ -4,10 +4,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-paddding">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Allergy-setup</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-list>
+    <p>Hello</p>
+    <ion-item *ngFor="let allergen of allergenList">
+      <ion-label>{{ allergen }}</ion-label>
+      <ion-checkbox
+        slot="end" [(ngModel)]="selectedAllergens[allergen]">
+      </ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="full" (click)="save()">Save Allergies</ion-button>
+  
 </ion-content>

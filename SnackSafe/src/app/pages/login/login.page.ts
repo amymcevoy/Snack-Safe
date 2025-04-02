@@ -21,4 +21,5 @@ export class LoginPage {
         //if successful
         this.router.navigate(['/home']);
     }
+
 }
