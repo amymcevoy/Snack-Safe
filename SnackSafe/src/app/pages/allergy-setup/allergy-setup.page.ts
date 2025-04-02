@@ -27,10 +27,21 @@ export class AllergySetupPage{
   
   selected: { [key: string]: boolean } = {};
 
-  constructor() {}
+  constructor(
+    private afAuth: AngularFireAuth,
+    private firestore: AngularFirestore
+  ) {}
 
-  save() {
+  async save() {
     const chosen = Object.keys(this.selected).filter(key => this.selected[key]);
+    const user = await this.afAuth.currentUser;
+
+    if (user) {
+      await this.firestore
+        .collection('users')
+        .doc(user.uid)
+        .set({ allergens: chosen }, { merge: true });
+        
     console.log('Selected allergens:', chosen);
   }
 
