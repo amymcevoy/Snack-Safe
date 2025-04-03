@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar,IonButton } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
+import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-home',
@@ -11,9 +13,32 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,IonButton]
 })
+
 export class HomePage{
 
-  constructor(private router: Router) { }
+  userName: string = 'User';
+
+  private router = inject(Router);
+  private auth = inject(Auth);
+  private firestore = inject(Firestore);
+
+  ionViewWillEnter() {
+    this.loadUserName();
+  }
+
+  async loadUserName() {
+    const user = this.auth.currentUser;
+    if (!user) return;
+
+    const userDoc = doc(this.firestore, 'users', user.uid);
+    const snapshot = await getDoc(userDoc);
+
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      this.userName = data['name'] || 'User';
+    }
+  }
+  
   goToScan() {
     this.router.navigate(['/scan']);
   }
@@ -27,7 +52,9 @@ export class HomePage{
   }
 
   logout() {
-    this.router.navigate(['/auth']); // or add Firebase logout later
+    this.router.navigate(['/auth']);
 
   }
+
+
 }

@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar ,IonToggle,IonItem,IonList,IonLabel,IonButton} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { Auth, getAuth } from '@angular/fire/auth';
-import { Firestore, getFirestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
+import { Auth,  } from '@angular/fire/auth';
+import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-allergy-setup',

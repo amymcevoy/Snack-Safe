@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Auth,createUserWithEmailAndPassword} from '@angular/fire/auth';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-register',
@@ -18,11 +19,17 @@ export class RegisterPage {
 
   private auth = inject(Auth);
   private router = inject(Router);
+  private firestore = inject(Firestore);
 
   async register() {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, this.email, this.password);
-      console.log('User registered:', userCredential.user);
+      const user = userCredential.user;
+
+      const userDoc = doc(this.firestore, 'users', user.uid);
+      await setDoc(userDoc, { name: this.name }, { merge: true });
+  
+      console.log('User registered:', user.email);
       this.router.navigate(['/allergy-setup']);
     } catch (error: any) {
       console.error('Registration failed:', error.message);
