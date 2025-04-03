@@ -1,5 +1,5 @@
 import { Component ,inject} from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule ,AlertController} from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
@@ -19,6 +19,8 @@ export class LoginPage {
 
     private auth = inject(Auth);
     private router = inject(Router);
+    private alertCtrl = inject(AlertController);
+
 
     async login(){
         try {
@@ -27,9 +29,29 @@ export class LoginPage {
         //if successful
         this.router.navigate(['/home']);
         } catch (err: any) {
-            console.error('Login failed:', err.message);
+            const errorCode = err.code;
+            let message = 'Login failed. Please try again.';
+          
+            if (errorCode === 'auth/user-not-found') {
+              message = 'No account found with this email.';
+            } else if (errorCode === 'auth/wrong-password') {
+              message = 'Incorrect password.';
+            } else if (errorCode === 'auth/invalid-email') {
+              message = 'Invalid email address.';
+            }
+            
+            this.showError(message);
         }
     }
+
+    async showError(message: string) {
+        const alert = await this.alertCtrl.create({
+          header: 'Login Failed',
+          message,
+          buttons: ['OK']
+        });
+        await alert.present();
+      }
 
     goToRegister() {
         this.router.navigate(['/register']);
