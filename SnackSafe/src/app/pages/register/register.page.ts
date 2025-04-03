@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicModule} from '@ionic/angular';
+import { Component ,inject} from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Auth,createUserWithEmailAndPassword} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-register',
@@ -15,16 +16,17 @@ export class RegisterPage {
   email = '';
   password = '';
 
-  constructor(private router: Router) {}
+  private auth = inject(Auth);
+  private router = inject(Router);
 
-  toAllergy() {
-    //remove error
-    (document.activeElement as HTMLElement)?.blur();
-
-    console.log('Register clicked:', this.email, this.password);
-    
-    //if successful
-    this.router.navigate(['/allergy-setup']);
+  async register() {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(this.auth, this.email, this.password);
+      console.log('User registered:', userCredential.user);
+      this.router.navigate(['/allergy-setup']);
+    } catch (error: any) {
+      console.error('Registration failed:', error.message);
+    }
   }
 
   goToLogin(){
