@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar,IonButton } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-scan',
@@ -19,9 +20,10 @@ export class ScanPage {
     allergens?: string[];
   } | null = null;
   
-  
   scanError: string = '';
   
+  constructor(private router: Router) {} 
+
 
   scanBarcode(){
 
@@ -34,6 +36,11 @@ export class ScanPage {
       };
 
       this.scanError = '';
+
+      this.router.navigateByUrl('/results', {
+        state: { product: this.scanResult }
+      });
+
       
     } catch (err){
 

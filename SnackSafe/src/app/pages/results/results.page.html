@@ -1,13 +1,17 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Scan Results</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="results-bg">
+  <div class="center-wrapper">
+    <div class="form" *ngIf="product">
+      <h2>{{ product.name }}</h2>
+      <p><strong>Barcode:</strong> {{ product.code }}</p>
 
-<ion-content class="ion-padding">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">results</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <p *ngIf="product.allergens?.length">
+        <strong>Contains:</strong> {{ product.allergens.join(', ') }}
+      </p>
+
+      <ion-button expand="block" class="back-Btn" routerLink="/scan">
+        Scan Another
+      </ion-button>
+
+    </div>
+  </div>
 </ion-content>
