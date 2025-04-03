@@ -17,14 +17,14 @@ export class RegisterPage {
 
   constructor(private router: Router) {}
 
-  register() {
+  toAllergy() {
     //remove error
     (document.activeElement as HTMLElement)?.blur();
 
     console.log('Register clicked:', this.email, this.password);
     
     //if successful
-    this.router.navigate(['/home']);
+    this.router.navigate(['/allergy-setup']);
   }
 
   goToLogin(){

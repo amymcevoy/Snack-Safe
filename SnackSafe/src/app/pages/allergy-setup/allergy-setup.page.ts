@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar ,IonToggle,IonItem,IonList,IonLabel,IonButton} from '@ionic/angular/standalone';
-
+import { Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { Auth, getAuth } from '@angular/fire/auth';
 import { Firestore, getFirestore, doc, setDoc } from '@angular/fire/firestore';
@@ -29,20 +29,16 @@ export class AllergySetupPage{
   
   selectedAllergens: { [key: string]: boolean } = {};
 
+  constructor(private router: Router) {}
 
   async save() {
 
-    const auth = getAuth();
-    const firestore = getFirestore();
-  
     const chosen = Object.keys(this.selectedAllergens).filter(key => this.selectedAllergens[key]);
-    const user = auth.currentUser;
-
-    if (user) {
-      const userDoc = doc(firestore, 'users', user.uid);
-      await setDoc(userDoc, { allergens: chosen }, { merge: true });
+   
 
     console.log('Selected allergens:', chosen);
-  }
+
+    console.log('Navigating to home...');
+    this.router.navigate(['/home'])
   }
 }
