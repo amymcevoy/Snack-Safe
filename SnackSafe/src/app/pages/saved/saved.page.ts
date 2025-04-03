@@ -1,20 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonHeader, IonTitle, IonToolbar} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-saved',
   templateUrl: './saved.page.html',
   styleUrls: ['./saved.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonicModule, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
-export class SavedPage implements OnInit {
 
-  constructor() { }
+export class SavedPage {
 
-  ngOnInit() {
-  }
-
+//Examples for now
+  previousScans = [
+    {
+      name: 'Snickers Bar',
+      date: 'April 2, 2025',
+      allergens: ['Peanuts', 'Dairy']
+    },
+  ];
 }
