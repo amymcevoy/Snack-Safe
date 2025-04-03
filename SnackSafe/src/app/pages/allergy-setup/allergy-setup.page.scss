@@ -1,0 +1,47 @@
+.allergy-bg {
+    --background: #c5d7d6;
+  }
+  
+  .center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .form {
+    background: #f6f7f7;
+    padding: 24px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .form h2 {
+    font-size: 22px;
+    color: #092c3e;
+    margin-bottom: 24px;
+  }
+  
+  .allergen-list {
+    margin-bottom: 24px;
+    background: transparent;
+  }
+
+  .save-Btn
+  {
+    --background: #092c3e;
+    --color: #ffffff;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-top: 8px;
+  }
+  
+  ion-item {
+    --background: transparent;
+    --color: #092c3e;
+  }
+  

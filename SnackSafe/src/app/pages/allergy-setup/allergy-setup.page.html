@@ -1,20 +1,20 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Allergy-setup</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="allergy-bg">
+  <div class="center-wrapper">
+    <div class="form">
+      <h2>Allergy Selection</h2>
 
-<ion-content class="ion-padding">
-  <ion-list>
-    <p>Hello</p>
+  <ion-list class="allergen-list">
     <ion-item *ngFor="let allergen of allergenList">
       <ion-label>{{ allergen }}</ion-label>
+
       <ion-checkbox
         slot="end" [(ngModel)]="selectedAllergens[allergen]">
       </ion-checkbox>
+
     </ion-item>
   </ion-list>
 
-  <ion-button expand="full" (click)="save()">Save Allergies</ion-button>
-
+    <ion-button expand="block" class="save-Btn" (click)="save()">Save Allergies</ion-button>
+  </div>
+</div>
 </ion-content>
