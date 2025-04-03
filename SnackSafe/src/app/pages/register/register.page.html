@@ -1,13 +1,36 @@
-<ion-header>
-    <ion-toolbar>
-      <ion-title>Create Account</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content class="ion-padding">
-    <ion-input placeholder="Email" type="email"></ion-input>
-    <ion-input placeholder="Password" type="password"></ion-input>
-    <ion-input placeholder="Confirm Password" type="password"></ion-input>
+ <ion-content class="register-bg">
+  <div class="form">
+    <h2 class="form-title">Create your account</h2>
+
+    <ion-input
+    placeholder="Name"
+    fill="outline"
+    class="form-input"
+    [(ngModel)]="email">
+    </ion-input>
+
+    <ion-input 
+    placeholder="Email" 
+    fill="outline"
+    class="form-input"
+    type="email"
+    [(ngModel)]="email">
+    </ion-input>
+
+    <ion-input
+     placeholder="Password"
+     fill="outline"
+     class="form-input"
+     type="password"
+     [(ngModel)]="password">
+    </ion-input>
+
     <ion-button expand="block" (click)="register()">Register</ion-button>
-  </ion-content>
+    
+    <div class="loginlink" (click)="goToLogin()">
+      Already have an account? <span class="link">Login</span>
+    </div>
+  </div>
+</ion-content>
+  
   
