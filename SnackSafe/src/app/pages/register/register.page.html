@@ -1,12 +1,13 @@
  <ion-content class="register-bg">
-  <div class="form">
+  <div class="center-wrapper">
+    <div class="form">
     <h2 class="form-title">Create your account</h2>
 
     <ion-input
     placeholder="Name"
     fill="outline"
     class="form-input"
-    [(ngModel)]="email">
+    [(ngModel)]="name">
     </ion-input>
 
     <ion-input 
@@ -25,12 +26,13 @@
      [(ngModel)]="password">
     </ion-input>
 
-    <ion-button expand="block" (click)="register()">Register</ion-button>
+    <ion-button expand="block" class="register-Btn" (click)="register()">Register</ion-button>
     
     <div class="loginlink" (click)="goToLogin()">
       Already have an account? <span class="link">Login</span>
     </div>
   </div>
+</div>
 </ion-content>
   
   

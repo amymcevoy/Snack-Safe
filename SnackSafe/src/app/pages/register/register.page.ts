@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule} from '@ionic/angular';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [IonicModule],
+  imports: [IonicModule,FormsModule],
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss']
 })
-export class RegisterPage { email = '';
+export class RegisterPage { 
+  name= '';
+  email = '';
   password = '';
 
   constructor(private router: Router) {}
@@ -22,5 +25,9 @@ export class RegisterPage { email = '';
     
     //if successful
     this.router.navigate(['/home']);
+  }
+
+  goToLogin(){
+    this.router.navigate(['/login']);
   }
 }
