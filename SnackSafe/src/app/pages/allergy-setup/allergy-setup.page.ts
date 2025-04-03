@@ -41,4 +41,5 @@ export class AllergySetupPage{
     console.log('Navigating to home...');
     this.router.navigate(['/home'])
   }
+
 }

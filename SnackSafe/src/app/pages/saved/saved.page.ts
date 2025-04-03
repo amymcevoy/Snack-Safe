@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonHeader, IonTitle, IonToolbar} from '@ionic/angular/standalone';
 import { IonicModule } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-saved',
@@ -13,6 +14,12 @@ import { IonicModule } from '@ionic/angular';
 })
 
 export class SavedPage {
+
+  constructor(private router: Router) {}
+
+  goHome() {
+    this.router.navigate(['/home']);
+  }
 
 //Examples for now
   previousScans = [

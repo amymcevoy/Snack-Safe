@@ -49,7 +49,6 @@ export class ScanPage {
   }
 
   goHome() {
-    console.log('Return button clicked'); // ✅ check console
     this.router.navigate(['/home']);
   }
 
