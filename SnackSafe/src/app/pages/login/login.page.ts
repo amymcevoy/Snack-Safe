@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component ,inject} from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 
 @Component({
-    
+
   selector: 'app-login',
   standalone: true,
   imports: [IonicModule,FormsModule],
@@ -16,17 +17,22 @@ export class LoginPage {
     email = '';
     password = '';
 
-    constructor(private router: Router){}
+    private auth = inject(Auth);
+    private router = inject(Router);
 
-    login(){
-        console.log("Login clicked: ", this.email,this.password);
-        
+    async login(){
+        try {
+            const userCredential = await signInWithEmailAndPassword(this.auth, this.email, this.password);
+            console.log('Logged in user:', userCredential.user);
         //if successful
         this.router.navigate(['/home']);
+        } catch (err: any) {
+            console.error('Login failed:', err.message);
+        }
     }
 
     goToRegister() {
         this.router.navigate(['/register']);
-
     }
 }
+
