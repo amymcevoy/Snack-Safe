@@ -1,0 +1,64 @@
+.homepage-bg {
+    --background: #c5d7d6;
+    padding: 20px;
+  }
+  
+  .greeting-wrapper {
+    align-items: center;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 32px;
+  }
+  
+  .greeting {
+    align-items: center;
+    text-align: center;
+    font-size: 22px;
+    color: #092c3e;
+    font-weight: 600;
+  }
+  
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .scan-Btn {
+    --background: #092c3e;
+    --color: #ffffff;
+    border-radius: 10px;
+  }
+  
+  .allergy-Btn {
+    --background: #092c3e;
+    --color: #ffffff;
+    border-radius: 10px;
+  }
+  
+  .saved-Btn {
+    --background: #092c3e;
+    --color: #ffffff;
+    border-radius: 10px;
+  }
+
+  .logout-Btn {
+
+    --background: #092c3e;
+    --color: #ffffff;
+    border-radius: 10px;
+  }
+
+  .logo-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+    
+  .logo-img {
+    width: 350px;
+    height: auto;
+  }
