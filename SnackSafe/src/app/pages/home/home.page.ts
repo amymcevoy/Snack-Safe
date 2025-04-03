@@ -22,6 +22,10 @@ export class HomePage{
     this.router.navigate(['/allergy-setup']);
   }
 
+  goToSaved(){
+    this.router.navigate(['/saved']);
+  }
+
   logout() {
     this.router.navigate(['/auth']); // or add Firebase logout later
 

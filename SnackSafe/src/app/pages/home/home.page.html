@@ -1,20 +1,23 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Home</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="homepage-bg">
+  <div>
+    <h2 class="greeting">Welcome to Snack Safe </h2>
+  </div>
 
-<ion-content class="ion-padding">
-<h2>Welcome to Snack Safe </h2>
-<ion-button expand="block" (click)="goToScan()">
-  Scan Product
-</ion-button>
+  <div class="buttons">
+  <ion-button expand="block" class="scan-Btn" (click)="goToScan()">
+    Scan Product
+  </ion-button>
 
-<ion-button expand="block" (click)="goToAllergySetup()">
-  Allergy Setup
-</ion-button>
+  <ion-button expand="block" class="allergy-Btn" (click)="goToAllergySetup()">
+    Edit Allergies
+  </ion-button>
 
-<ion-button expand="block" (click)="logout()">
-  Log Out
-</ion-button>
+  <ion-button expand="block" class="saved-Btn" (click)="goToSaved()">
+    Previous Scans
+  </ion-button>
+
+  <ion-button expand="block" (click)="logout()">
+    Log Out
+  </ion-button>
+  </div>
 </ion-content>
