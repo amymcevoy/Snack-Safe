@@ -24,7 +24,6 @@ export class ScanPage {
   
   constructor(private router: Router) {} 
 
-
   scanBarcode(){
 
     try{
@@ -48,4 +47,10 @@ export class ScanPage {
       this.scanError = 'Scan failed, try again';
     }
   }
+
+  goHome() {
+    console.log('Return button clicked'); // ✅ check console
+    this.router.navigate(['/home']);
+  }
+
 }
