@@ -1,9 +1,29 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Scan Product</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="scan-bg">
+  <div class="center-wrapper">
+    <div class="form">
+      <p>Scan Product</p>
 
-<ion-content class="ion-padding ion-text-center">
-  <p>Scan a barcode to check for allergens.</p>
+      <ion-button expand="block" class="scan-Btn" (click)="scanBarcode()">
+        Scan Barcode
+      </ion-button>
+
+      <ng-container *ngIf="scanResult as result">
+        <div class="scan-result">
+          <h4>{{ result.name }}</h4>
+          <p>Barcode: {{ result.code }}</p>
+
+          <ng-container *ngIf="result.allergens && result.allergens.length > 0">
+            <p>
+              <strong>Contains:</strong> {{ result.allergens.join(', ') }}
+            </p>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <!-- Error message -->
+      <div class="scan-error" *ngIf="scanError">
+        <p>{{ scanError }}</p>
+      </div>
+    </div>
+  </div>
 </ion-content>

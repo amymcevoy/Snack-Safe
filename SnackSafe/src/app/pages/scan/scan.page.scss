@@ -1,0 +1,61 @@
+.scan-bg {
+    --background: #c5d7d6;
+  }
+  
+  .center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .form {
+    background: #f6f7f7;
+    padding: 24px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form p {
+    font-size: 18px;
+    font-weight: 600;
+    color: #092c3e;
+    margin-bottom: 20px;
+  }
+  
+  .scan-Btn {
+    --background: #092c3e;
+    --color: #ffffff;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .scan-result {
+    text-align: left;
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 10px;
+    color: #092c3e;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    margin-top: 16px;
+  }
+  
+  .scan-result h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  
+  .scan-error p {
+    color: #b00020;
+    font-size: 14px;
+    margin-top: 16px;
+  }
+  
