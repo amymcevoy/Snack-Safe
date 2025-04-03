@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar,IonButton } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
-import { Auth } from '@angular/fire/auth';
+import { Auth, signOut } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-home',
@@ -51,10 +51,13 @@ export class HomePage{
     this.router.navigate(['/saved']);
   }
 
-  logout() {
+  async logout() {
+    
+    await signOut(this.auth); 
+    console.log('User signed out');
     this.router.navigate(['/auth']);
 
+  } catch (error: any) {
+    console.error('Logout error:', error);
   }
-
-
 }
