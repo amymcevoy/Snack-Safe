@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
+    
   selector: 'app-login',
   standalone: true,
-  imports: [IonicModule],
+  imports: [IonicModule,FormsModule],
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss']
 })
+
 export class LoginPage {
     email = '';
     password = '';
@@ -22,4 +25,8 @@ export class LoginPage {
         this.router.navigate(['/home']);
     }
 
+    goToRegister() {
+        this.router.navigate(['/register']);
+
+    }
 }

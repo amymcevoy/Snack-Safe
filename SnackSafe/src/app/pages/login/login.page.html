@@ -1,12 +1,29 @@
-<ion-header>
-    <ion-toolbar>
-      <ion-title>Log In</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content class="ion-padding">
-    <ion-input placeholder="Email" type="email"></ion-input>
-    <ion-input placeholder="Password" type="password"></ion-input>
-    <ion-button expand="block" (click)="login()">Log In</ion-button>
-  </ion-content>
+<ion-content class="login-bg">
+    <div class="center-wrapper">
+        <div class="form">
+            <h2>Welcome Back</h2>
+
+        <ion-input 
+        placeholder="Email" 
+        type="email"
+        fill="outline"
+        class="form-input"
+        [(ngModel)]="email">
+        </ion-input>
+
+        <ion-input 
+        placeholder="Password" 
+        type="password"
+        fill="outline"
+        class="form-input"
+        [(ngModel)]="password">
+        </ion-input>
+
+        <ion-button expand="block" class="login-Btn" (click)="login()">Log In</ion-button>
+        <div class="loginlink" (click)="goToRegister()">
+            Don’t have an account? <span class="link">Register</span>
+        </div>
+    </div>
+ </div> 
+</ion-content>
   
