@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar ,IonCheckbox,IonItem,IonList,IonLabel,IonButton} from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar ,IonToggle,IonItem,IonList,IonLabel,IonButton} from '@ionic/angular/standalone';
 
 import { inject } from '@angular/core';
 import { Auth, getAuth } from '@angular/fire/auth';
@@ -12,7 +12,7 @@ import { Firestore, getFirestore, doc, setDoc } from '@angular/fire/firestore';
   templateUrl: './allergy-setup.page.html',
   styleUrls: ['./allergy-setup.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar,IonCheckbox,IonItem,IonList,IonLabel,IonButton,CommonModule, FormsModule]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar,IonToggle,IonItem,IonList,IonLabel,IonButton,CommonModule, FormsModule]
 })
 export class AllergySetupPage{
   

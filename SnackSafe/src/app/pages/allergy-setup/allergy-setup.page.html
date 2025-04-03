@@ -7,9 +7,10 @@
     <ion-item *ngFor="let allergen of allergenList">
       <ion-label>{{ allergen }}</ion-label>
 
-      <ion-checkbox
-        slot="end" [(ngModel)]="selectedAllergens[allergen]">
-      </ion-checkbox>
+      <ion-toggle
+        slot="end" [(ngModel)]="selectedAllergens[allergen]"
+        color="tertiary">
+      </ion-toggle>
 
     </ion-item>
   </ion-list>
