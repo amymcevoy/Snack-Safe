@@ -9,7 +9,7 @@
         <strong>Contains:</strong> {{ product.allergens.join(', ') }}
       </p>
 
-      <ion-button expand="block" class="back-Btn" routerLink="/scan">
+      <ion-button expand="block" class="back-Btn" (click)="goBack()">
         Scan Another
       </ion-button>
 

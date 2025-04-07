@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar,IonButton} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-results',
@@ -15,8 +16,14 @@ import { Router } from '@angular/router';
 export class ResultsPage {
   product: any;
 
-  constructor(private router:Router){
+  private router = inject(Router);
+
+  constructor(){
     const nav = this.router.getCurrentNavigation();
     this.product = nav?.extras.state?.['product'];
+  }
+
+  goBack() {
+    this.router.navigate(['/scan']);
   }
 }

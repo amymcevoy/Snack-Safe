@@ -32,12 +32,6 @@ export class ScanPage {
  async scanBarcode(){
 
     try{      
-      
-      this.scanResult = {
-        name: 'Snickers Bar',
-        code: '12345678',
-        allergens: ['Peanuts', 'Dairy']
-      };
       const user = this.auth.currentUser;
       if (user) {
         const scansRef = collection(this.firestore, 'users', user.uid, 'scans');
