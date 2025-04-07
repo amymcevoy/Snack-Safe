@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { IonHeader, IonTitle, IonToolbar} from '@ionic/angular/standalone';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Auth } from '@angular/fire/auth';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-saved',
@@ -15,18 +18,27 @@ import { Router } from '@angular/router';
 
 export class SavedPage {
 
-  constructor(private router: Router) {}
+  previousScans: any[] = [];
 
-  goHome() {
-    this.router.navigate(['/home']);
+  private auth = inject(Auth);
+  private firestore = inject(Firestore);
+  private route = inject(Router);
+  
+  ionViewWillEnter() {
+    this.loadScans();
   }
 
-//Examples for now
-  previousScans = [
-    {
-      name: 'Snickers Bar',
-      date: 'April 2, 2025',
-      allergens: ['Peanuts', 'Dairy']
-    },
-  ];
+  goHome() {
+    this.route.navigate(['/home']);
+  }
+
+  async loadScans() {
+    const user = this.auth.currentUser;
+    if (!user) return;
+
+    const scansRef = collection(this.firestore, 'users', user.uid, 'scans');
+    const snapshot = await getDocs(scansRef);
+
+    this.previousScans = snapshot.docs.map(doc => doc.data());
+  }
 }
