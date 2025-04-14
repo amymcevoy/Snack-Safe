@@ -1,10 +1,11 @@
 export const environment = {
   production: true,
-  FIREBASE_API_KEY: '',
-  FIREBASE_AUTH_DOMAIN: '',
-  FIREBASE_PROJECT_ID: '',
-  FIREBASE_STORAGE_BUCKET: '',
-  FIREBASE_MESSAGING_SENDER_ID: '',
-  FIREBASE_APP_ID: '',
-  FIREBASE_MEASUREMENT_ID: ''
-};
+  firebase : {
+    apiKey: 'AIzaSyBmihysjmNWJMbPg00V9y86-iLyAgN5IAo',
+    authDomain: 'snack-safe.firebaseapp.com',
+    projectId: 'snack-safe',
+    storageBucket: 'snack-safe.appspot.com',
+    messagingSenderId: '625771968513',
+    appId: '1:625771968513:web:27ef397a10645ba282a800',
+    measurementId: 'G-JSX49FNM76'
+}};
