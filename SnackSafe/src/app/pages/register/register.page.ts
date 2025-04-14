@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Auth,createUserWithEmailAndPassword} from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [IonicModule,FormsModule],
+  imports: [IonicModule,FormsModule,CommonModule],
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss']
 })
