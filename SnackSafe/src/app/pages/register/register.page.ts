@@ -1,17 +1,20 @@
 import { Component ,inject} from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { Auth,createUserWithEmailAndPassword} from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [IonicModule,FormsModule,CommonModule],
+  imports: [IonicModule,FormsModule,CommonModule, ReactiveFormsModule  ],
   templateUrl: './register.page.html',
-  styleUrls: ['./register.page.scss']
+  styleUrls: ['./register.page.scss'],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RegisterPage { 
   name= '';

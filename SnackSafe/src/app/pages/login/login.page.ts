@@ -1,16 +1,19 @@
 import { Component ,inject} from '@angular/core';
 import { IonicModule ,AlertController} from '@ionic/angular';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 
 @Component({
 
   selector: 'app-login',
   standalone: true,
-  imports: [IonicModule,FormsModule],
+  imports: [IonicModule,FormsModule,ReactiveFormsModule],
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss']
+  styleUrls: ['./login.page.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
 export class LoginPage {

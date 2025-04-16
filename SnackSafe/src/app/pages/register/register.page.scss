@@ -1,84 +1,87 @@
 .register-bg {
-    --background: #c5d7d6;
-  }
-  
-  .center-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  .form {
-    background: #f6f7f7;
-    padding: 24px;
-    border-radius: 16px;
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form h2 {
-    font-size: 22px;
-    color: #092c3e;
-    margin-bottom: 24px;
-  }
-  
-  .form-input {
-    margin-bottom: 16px;
-    --background: #ffffff;
-    --color: #092c3e;
-    --placeholder-color: #092c3e;
-    --border-radius: 8px;
-    --padding-start: 14px;
-    --padding-end: 14px;
-    --padding-top: 14px;
-    --padding-bottom: 14px;
-    --highlight-color-focused: #1976d2;
-    --border-color: #ccc;
-  
-    font-size: 16px;
-    border: none;
-    box-shadow: 0 0 0 1px #ccc;
-  }
-  
-  .register-Btn {
-    --background: #092c3e;
-    --color: #ffffff;
-    border-radius: 8px;
-    font-size: 16px;
-    margin-top: 8px;
-  }
-  
-  .loginlink {
-    margin-top: 16px;
-    font-size: 14px;
-    color: #333;
-  }
-  
-  .link {
-    text-decoration: underline;
-    cursor: pointer;
-    color: #092c3e;
-  }
+  --background: #c5d7d6;
+}
 
-  ion-input {
-    display: block !important;
-    border: 2px solid red !important;
-    padding: 12px !important;
-    margin-bottom: 16px !important;
-    background: white !important;
-    color: black !important;
-  }
+.center-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
 
-  ::part(native) {
-    background: white;
-    color: black;
-    padding: 12px;
-  }
-  
-  
-  
+.form {
+  background: #f6f7f7;
+  padding: 24px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.form h2 {
+  font-size: 22px;
+  color: #092c3e;
+  margin-bottom: 24px;
+}
+
+ion-input.form-input {
+  margin-bottom: 16px;
+  --background: #ffffff;
+  --color: #092c3e;
+  --placeholder-color: #092c3e;
+  --highlight-color-focused: #092c3e;
+  --border-color: #092c3e;
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+}
+
+ion-input.form-input::part(native) {
+  background-color: #ffffff;
+  color: #092c3e;
+}
+.register-Btn {
+  --background: #092c3e;
+  --color: #ffffff;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.loginlink {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #092c3e;
+}
+
+.link {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #092c3e;
+}
+
+.form-input::part(native) {
+  background-color: #ffffff;
+  color: #092c3e;
+}
+
+:host {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color-scheme: light;
+}
+
+ion-content {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+ion-input.form-input::part(native) {
+  background-color: #ffffff !important;
+  color: #092c3e !important;
+}
+

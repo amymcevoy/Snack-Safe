@@ -42,4 +42,13 @@ ion-page:not(.ion-page-hidden) {
   opacity: 1 !important;
 }
 
-  
+body {
+  background: #c5d7d6 !important;
+  color: #092c3e !important;
+}
+
+ion-input::part(native) {
+  background-color: #ffffff !important;
+  color: #092c3e !important;
+}
+
