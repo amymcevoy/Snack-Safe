@@ -67,6 +67,15 @@
     --color: #092c3e;
     font-size: xx-large;
   }
+
+  .photo-preview {
+    margin-top: 1rem;
+    border-radius: 12px;
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+  }
+  
   
   
   

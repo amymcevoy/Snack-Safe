@@ -7,14 +7,17 @@ import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
 import { inject } from '@angular/core';
 import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
-
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { getStorage, ref, uploadString, getDownloadURL } from 'firebase/storage';
 
 @Component({
   selector: 'app-scan',
   templateUrl: './scan.page.html',
   styleUrls: ['./scan.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,IonButton]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,IonButton,],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
 export class ScanPage {
@@ -30,6 +33,28 @@ export class ScanPage {
   private router = inject(Router);
   private auth = inject(Auth);
   private firestore = inject(Firestore);
+  photo: string | null = null;
+
+async takePhoto() {
+  try {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera
+    });
+
+    if (image.dataUrl) {
+      this.photo = image.dataUrl;
+      console.log('Photo captured!');
+    } else {
+      this.photo = null; // Handle undefined case
+    }
+  } catch (err) {
+    console.error('Camera error:', err);
+  }
+}
+
   
  async scanBarcode(){
 
@@ -73,6 +98,8 @@ export class ScanPage {
       this.scanResult = null;
       this.scanError = 'Scan failed, try again.';
     }
+
+
   }
   goHome() {
     this.router.navigate(['/home']);
