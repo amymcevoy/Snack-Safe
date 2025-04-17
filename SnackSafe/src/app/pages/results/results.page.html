@@ -1,18 +1,32 @@
 <ion-content class="results-bg">
-
   <div class="center-wrapper">
-    <div class="form" *ngIf="product">
-      <h2>{{ product.name }}</h2>
-      <p><strong>Barcode:</strong> {{ product.code }}</p>
+    <div class="result-card">
+      <h2>Scan Result</h2>
 
-      <p *ngIf="product.allergens?.length">
-        <strong>Contains:</strong> {{ product.allergens.join(', ') }}
-      </p>
+      <ng-container *ngIf="product">
+      <div class="product-info">
+      <p><strong>{{ product.name }}</strong></p>
+      <p><strong>Barcode:</strong> {{ product.code }}</p>
+      </div>
+
+      <div *ngIf="product.allergens?.length && product.allergens[0] !== 'None detected'" class="alert-box danger">
+         ⚠️ <strong>Allergens detected:</strong> {{ product.allergens.join(', ') }}
+      </div>
+
+      <div *ngIf="product.allergens?.[0] === 'None detected'" class="alert-box safe">
+        ✅ No allergens found. Safe to eat!
+      </div>
 
       <ion-button expand="block" class="back-Btn" (click)="goBack()">
         Scan Another
       </ion-button>
+    </ng-container>
 
+    <ng-template #noProduct>
+      <p>No product found. Please try scanning again.</p>
+    </ng-template>
+
+    
     </div>
   </div>
 </ion-content>

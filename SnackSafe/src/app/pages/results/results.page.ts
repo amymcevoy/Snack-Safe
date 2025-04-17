@@ -20,10 +20,10 @@ export class ResultsPage {
 
   constructor(){
     const nav = this.router.getCurrentNavigation();
-    this.product = nav?.extras.state?.['product'];
+    this.product = nav?.extras.state?.['product'] || history.state['product'];
   }
-
+  
   goBack() {
-    this.router.navigate(['/scan']);
+    this.router.navigateByUrl('/scan');
   }
 }

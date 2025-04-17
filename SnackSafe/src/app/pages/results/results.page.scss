@@ -9,16 +9,48 @@
     height: 100vh;
     padding: 20px;
   }
-  
-  .form {
-    background: #f6f7f7;
-    color: #092c3e;
-    padding: 24px;
+
+  .result-card {
+    background: #ffffff;
     border-radius: 16px;
-    width: 100%;
+    padding: 24px;
     max-width: 400px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: #092c3e;
+  }
+  
+  
+  h2 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #092c3e;
+  }
+  
+  .product-info {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .alert-box {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
     text-align: center;
   }
+  
+  .alert-box.danger {
+    background-color: #ffe5e5;
+    color: #b00020;
+  }
+  
+  .alert-box.safe {
+    background-color: #e0f5ea;
+    color: #0f9d58;
+  }
+  
   
   .back-Btn {
     --background: #092c3e;
