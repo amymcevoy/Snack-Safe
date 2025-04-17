@@ -81,9 +81,10 @@
     pointer-events: auto !important;
   }
   
-  ion-input,
-  input {
+  ion-input {
     pointer-events: auto !important;
+    --highlight-color-focused: #092c3e;
   }
+  
   
 }

@@ -5,21 +5,21 @@
 
       <form [formGroup]="registerForm" (ngSubmit)="register()">
         <ion-item lines="none">
-          <ion-label position="floating">Name</ion-label>
+          <ion-label position="floating" slot="label">Name</ion-label>
           <ion-input type="text" formControlName="name"></ion-input>
         </ion-item>
-      
+        
         <ion-item lines="none">
-          <ion-label position="floating">Email</ion-label>
+          <ion-label position="floating" slot="label">Email</ion-label>
           <ion-input type="email" formControlName="email"></ion-input>
         </ion-item>
-      
+        
         <ion-item lines="none">
-          <ion-label position="floating">Password</ion-label>
+          <ion-label position="floating" slot="label">Password</ion-label>
           <ion-input type="password" formControlName="password"></ion-input>
         </ion-item>
-
-        <ion-button expand="block" class="register-Btn" (click)="register()">
+        
+        <ion-button expand="block" class="register-Btn">
           Register
         </ion-button>
       </form>

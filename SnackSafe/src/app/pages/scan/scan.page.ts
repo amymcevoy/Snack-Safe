@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
 import { inject } from '@angular/core';
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
+
 
 @Component({
   selector: 'app-scan',
@@ -32,29 +34,46 @@ export class ScanPage {
  async scanBarcode(){
 
     try{      
-      const user = this.auth.currentUser;
-      if (user) {
-        const scansRef = collection(this.firestore, 'users', user.uid, 'scans');
-        await addDoc(scansRef, {
-          ...this.scanResult,
-          timestamp: new Date()
+      const result = await BarcodeScanner.scan();
+
+      if (result.barcodes.length > 0) {
+        const code = result.barcodes[0].rawValue || 'N/A';
+  
+        // Example scan result (mocked product info)
+        this.scanResult = {
+          name: 'Sample Product',
+          code,
+          allergens: ['Milk', 'Nuts'] // You can replace with real lookup later
+        };
+  
+        // Step 2: Save scan to Firestore
+        const user = this.auth.currentUser;
+        if (user) {
+          const scansRef = collection(this.firestore, 'users', user.uid, 'scans');
+          await addDoc(scansRef, {
+            ...this.scanResult,
+            timestamp: new Date()
+          });
+          console.log('Scan saved!');
+        }
+  
+        this.scanError = '';
+  
+        // Step 3: Navigate to results with scan data
+        this.router.navigateByUrl('/results', {
+          state: { product: this.scanResult }
         });
-        console.log('Scan saved!');
+  
+      } else {
+        this.scanError = 'No barcode found.';
       }
-
-      this.scanError = '';
-
-      this.router.navigateByUrl('/results', {
-        state: { product: this.scanResult }
-      });
-   
-    } catch (err){
-
+  
+    } catch (err) {
+      console.error(err);
       this.scanResult = null;
-      this.scanError = 'Scan failed, try again';
+      this.scanError = 'Scan failed, try again.';
     }
   }
-
   goHome() {
     this.router.navigate(['/home']);
   }
