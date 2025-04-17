@@ -3,22 +3,25 @@
     <div class="form">
       <h2 class="form-title">Create your account</h2>
 
-      <ion-item>
-        <ion-label position="floating">Name</ion-label>
-        <ion-input (input)="onNameChange($event)" type="text" placeholder="Enter your name"></ion-input>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input (input)="onEmailChange($event)" type="email" placeholder="Enter your email"></ion-input>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input (input)="onPasswordChange($event)" type="password" placeholder="Enter your password"></ion-input>
-      </ion-item>
-  
-      <ion-button expand="block" (click)="register()">Register</ion-button>
+      <form>
+        <ion-item lines="none">
+          <ion-label position="floating">Name</ion-label>
+          <input type="text" [(ngModel)]="name" name="name" />
+        </ion-item>
+      
+        <ion-item lines="none">
+          <ion-label position="floating">Email</ion-label>
+          <input type="email" [(ngModel)]="email" name="email" />
+        </ion-item>
+      
+        <ion-item lines="none">
+          <ion-label position="floating">Password</ion-label>
+          <input type="password" [(ngModel)]="password" name="password" />
+        </ion-item>
+      </form>
+      
+      <ion-button class="register-Btn" expand="block" (click)="register()">Register</ion-button>
+
       <div class="loginlink">
         Already have an account?
         <span class="link" (click)="goToLogin()">Login</span>

@@ -47,11 +47,12 @@
 
   ion-input {
     width: 100%;
-    --padding-start: 12px;
-    --padding-end: 12px;
-    --background: #fff;
-    --color: #000;
-    font-size: 16px;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+    background: #f9f9f9;
   }
   
 

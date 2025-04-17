@@ -24,6 +24,22 @@ export class RegisterPage {
   private router = inject(Router);
   private firestore = inject(Firestore);
 
+  showForm = false;
+
+  ionViewDidEnter() {
+    const inputs = document.querySelectorAll('ion-input input');
+    inputs.forEach((el: any) => {
+      el.removeAttribute('aria-hidden');
+      el.removeAttribute('tabindex');
+      el.disabled = false;
+      el.style.pointerEvents = 'auto';
+    });
+  
+    const parents = document.querySelectorAll('[aria-hidden="true"]');
+    parents.forEach
+  }
+  
+
   async register() {
 
     if (!this.name || !this.email || !this.password) {
