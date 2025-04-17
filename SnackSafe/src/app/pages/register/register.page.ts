@@ -50,4 +50,16 @@ export class RegisterPage {
   goToLogin() {
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }
+
+  onNameChange(event: any) {
+    this.name = event.target.value;
+  }
+
+  onEmailChange(event: any) {
+    this.email = event.target.value;
+  }
+
+  onPasswordChange(event: any) {
+    this.password = event.target.value;
+  }
 }

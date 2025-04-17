@@ -5,22 +5,20 @@
 
       <ion-item>
         <ion-label position="floating">Name</ion-label>
-        <ion-input [(ngModel)]="name" type="text" placeholder="Enter your name"></ion-input>
+        <ion-input (input)="onNameChange($event)" type="text" placeholder="Enter your name"></ion-input>
       </ion-item>
   
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input [(ngModel)]="email" type="email" placeholder="Enter your email"></ion-input>
+        <ion-input (input)="onEmailChange($event)" type="email" placeholder="Enter your email"></ion-input>
       </ion-item>
   
       <ion-item>
         <ion-label position="floating">Password</ion-label>
-        <ion-input [(ngModel)]="password" type="password" placeholder="Enter your password"></ion-input>
+        <ion-input (input)="onPasswordChange($event)" type="password" placeholder="Enter your password"></ion-input>
       </ion-item>
   
       <ion-button expand="block" (click)="register()">Register</ion-button>
-      </form>
-
       <div class="loginlink">
         Already have an account?
         <span class="link" (click)="goToLogin()">Login</span>
