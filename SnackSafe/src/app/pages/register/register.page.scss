@@ -86,6 +86,19 @@
     pointer-events: auto !important;
     --highlight-color-focused: #092c3e;
   }
+
+  ion-input::part(native){
+    color: #092c3e !important;
+    background: #fff !important;
+    pointer-events: auto !important;
+    opacity: 1 !important;
+  }
   
+  ion-item label {
+    display: block;
+    font-size: 14px;
+    color: #092c3e;
+    margin-bottom: 0.2rem;
+  }
   
 }

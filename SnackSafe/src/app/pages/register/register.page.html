@@ -5,22 +5,22 @@
 
       <form>
         <ion-item lines="none">
-          <ion-label position="floating">Name</ion-label>
-          <input type="text" [(ngModel)]="name" name="name" />
+          <label for="name">Name</label>
+          <input type="text" [(ngModel)]="name" name="name"/>
         </ion-item>
       
         <ion-item lines="none">
-          <ion-label position="floating">Email</ion-label>
-          <input type="email" [(ngModel)]="email" name="email" />
+          <label for="email">Email</label>
+          <input type="text" [(ngModel)]="email" name="email" />
         </ion-item>
       
         <ion-item lines="none">
-          <ion-label position="floating">Password</ion-label>
-          <input type="password" [(ngModel)]="password" name="password" />
+          <label for="password">Password</label>
+          <input type="text" [(ngModel)]="password" name="password" />
         </ion-item>
       </form>
       
-      <ion-button class="register-Btn" expand="block" (click)="register()">Register</ion-button>
+      <ion-button expand="block" (click)="register()">Register</ion-button>
 
       <div class="loginlink">
         Already have an account?

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [IonicModule, FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [IonicModule, FormsModule, CommonModule],
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss']
 })
@@ -31,12 +31,21 @@ export class RegisterPage {
     inputs.forEach((el: any) => {
       el.removeAttribute('aria-hidden');
       el.removeAttribute('tabindex');
+      el.removeAttribute('disabled')
       el.disabled = false;
       el.style.pointerEvents = 'auto';
+      el.style.opacity = '1';
+      el.style.border = '1px solid #092c3e';
+      el.style.padding = '12px';
+      el.style.fontSize = '15px';
+      el.style.borderRadius = '8px';
     });
   
     const parents = document.querySelectorAll('[aria-hidden="true"]');
-    parents.forEach
+    parents.forEach((el: any) => {
+      el.removeAttribute('aria-hidden');
+      el.style.display = 'block';
+    });
   }
   
 
@@ -65,10 +74,6 @@ export class RegisterPage {
 
   goToLogin() {
     this.router.navigateByUrl('/login', { replaceUrl: true });
-  }
-
-  onNameChange(event: any) {
-    this.name = event.target.value;
   }
 
   onEmailChange(event: any) {
