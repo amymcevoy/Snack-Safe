@@ -1,54 +1,43 @@
-import { Component ,inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { FormsModule , ReactiveFormsModule } from '@angular/forms';
-import { Auth,createUserWithEmailAndPassword} from '@angular/fire/auth';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [IonicModule,FormsModule,CommonModule, ReactiveFormsModule  ],
+  imports: [IonicModule, FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss']
 })
 
-export class RegisterPage { 
+export class RegisterPage {
 
-  registerForm!: FormGroup;
+  name: string = '';
+  email: string = '';
+  password: string = '';
   
   private auth = inject(Auth);
   private router = inject(Router);
   private firestore = inject(Firestore);
-  private fb = inject(FormBuilder);
 
-  constructor() {
-  this.registerForm = this.fb.group({
-    name: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
-  });
-}
-
-  ionViewDidEnter() {
-    const blockers = document.querySelectorAll('[aria-hidden="true"]');
-    blockers.forEach(el => el.removeAttribute('aria-hidden'));
-  }
-  
   async register() {
 
-    if (this.registerForm.invalid) return;
+    if (!this.name || !this.email || !this.password) {
+      console.error('Please fill in all fields.');
+      return;
+    }
 
-    const { name, email, password } = this.registerForm.value;
-  
     try {
-      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(this.auth, this.email, this.password);
       const user = userCredential.user;
 
+      // Save user data to Firestore
       const userDoc = doc(this.firestore, 'users', user.uid);
-      await setDoc(userDoc, { name }, { merge: true })
+      await setDoc(userDoc, { name: this.name }, { merge: true });
 
       console.log('User registered:', user.email);
       this.router.navigateByUrl('/allergy-setup', { replaceUrl: true });
@@ -58,8 +47,7 @@ export class RegisterPage {
     }
   }
 
-  goToLogin(){
+  goToLogin() {
     this.router.navigateByUrl('/login', { replaceUrl: true });
-
   }
 }

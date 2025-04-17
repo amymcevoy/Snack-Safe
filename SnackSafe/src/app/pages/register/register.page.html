@@ -3,25 +3,22 @@
     <div class="form">
       <h2 class="form-title">Create your account</h2>
 
-      <form [formGroup]="registerForm" (ngSubmit)="register()">
-        <ion-item lines="none">
-          <ion-label position="floating" slot="label">Name</ion-label>
-          <ion-input type="text" formControlName="name"></ion-input>
-        </ion-item>
-        
-        <ion-item lines="none">
-          <ion-label position="floating" slot="label">Email</ion-label>
-          <ion-input type="email" formControlName="email"></ion-input>
-        </ion-item>
-        
-        <ion-item lines="none">
-          <ion-label position="floating" slot="label">Password</ion-label>
-          <ion-input type="password" formControlName="password"></ion-input>
-        </ion-item>
-        
-        <ion-button expand="block" class="register-Btn">
-          Register
-        </ion-button>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input [(ngModel)]="name" type="text" placeholder="Enter your name"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input [(ngModel)]="email" type="email" placeholder="Enter your email"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input [(ngModel)]="password" type="password" placeholder="Enter your password"></ion-input>
+      </ion-item>
+  
+      <ion-button expand="block" (click)="register()">Register</ion-button>
       </form>
 
       <div class="loginlink">

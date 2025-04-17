@@ -47,6 +47,7 @@ async takePhoto() {
     if (image.dataUrl) {
       this.photo = image.dataUrl;
       console.log('Photo captured!');
+      await this.uploadImage(image.dataUrl);
     } else {
       this.photo = null; // Handle undefined case
     }
@@ -104,5 +105,36 @@ async takePhoto() {
   goHome() {
     this.router.navigate(['/home']);
   }
+
+  async uploadImage(dataUrl: string) {
+    try {
+      const storage = getStorage();
+      const imageRef = ref(storage, 'images/' + new Date().toISOString());
+  
+      // Upload the image data to Firebase Storage
+      const uploadResult = await uploadString(imageRef, dataUrl, 'data_url');
+  
+      // Get the URL of the uploaded image
+      const url = await getDownloadURL(uploadResult.ref);
+      console.log('Image uploaded to Firebase Storage:', url);
+  
+      // Optionally, save this URL to Firestore along with scan data
+      if (this.scanResult) {
+        const user = this.auth.currentUser;
+        if (user) {
+          const scansRef = collection(this.firestore, 'users', user.uid, 'scans');
+          await addDoc(scansRef, {
+            ...this.scanResult,
+            imageUrl: url,  // Save the URL of the image
+            timestamp: new Date()
+          });
+          console.log('Scan saved with image URL!');
+        }
+      }
+    } catch (err) {
+      console.error('Upload failed:', err);
+    }
+  }
+  
 
 }
