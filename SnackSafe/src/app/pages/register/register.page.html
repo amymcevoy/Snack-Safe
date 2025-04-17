@@ -4,23 +4,24 @@
       <h2 class="form-title">Create your account</h2>
 
       <form>
-        <ion-item lines="none">
+
+        <div class="input-group">
           <label for="name">Name</label>
           <input type="text" [(ngModel)]="name" name="name"/>
-        </ion-item>
+        </div>
       
-        <ion-item lines="none">
+        <div class="input-group">
           <label for="email">Email</label>
           <input type="text" [(ngModel)]="email" name="email" />
-        </ion-item>
+        </div>
       
-        <ion-item lines="none">
+        <div class="input-group">
           <label for="password">Password</label>
           <input type="text" [(ngModel)]="password" name="password" />
-        </ion-item>
+        </div>
       </form>
       
-      <ion-button expand="block" (click)="register()">Register</ion-button>
+      <ion-button class="register-Btn" expand="block" (click)="register()">Register</ion-button>
 
       <div class="loginlink">
         Already have an account?
