@@ -15,10 +15,11 @@ export class AuthPage {
   constructor(private router: Router) {}
 
   goToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 
   goToRegister() {
-    this.router.navigate(['/register']);
+    this.router.navigateByUrl('/register', { replaceUrl: true });
+
   }
 }

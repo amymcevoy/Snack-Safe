@@ -3,8 +3,6 @@ import { IonicModule ,AlertController} from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
 
 @Component({
 
