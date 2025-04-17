@@ -35,6 +35,12 @@
                 "output": "assets"
               },
               {
+                  "input": "src",
+                  "glob": "_redirects",
+                  "output": "."                
+              },
+
+              {
                 "input": "src",
                 "glob": "manifest.webmanifest",
                 "output": "."

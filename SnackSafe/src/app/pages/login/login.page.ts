@@ -12,8 +12,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   standalone: true,
   imports: [IonicModule,FormsModule,ReactiveFormsModule],
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  styleUrls: ['./login.page.scss']
 })
 
 export class LoginPage {

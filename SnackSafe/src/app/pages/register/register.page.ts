@@ -13,8 +13,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   standalone: true,
   imports: [IonicModule,FormsModule,CommonModule, ReactiveFormsModule  ],
   templateUrl: './register.page.html',
-  styleUrls: ['./register.page.scss'],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  styleUrls: ['./register.page.scss']
 })
 export class RegisterPage { 
   name= '';
