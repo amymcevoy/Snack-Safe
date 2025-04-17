@@ -2,23 +2,19 @@
 <ion-content class="login-bg">
     <div class="center-wrapper">
         <div class="form">
-            <h2>Welcome Back</h2>
+            <h2 class="form-title">Welcome Back</h2>
 
-        <ion-input 
-        placeholder="Email" 
-        type="email"
-        fill="outline"
-        class="form-input"
-        [(ngModel)]="email">
-        </ion-input>
+        <form>
+            <div class="input-group">
+                <label position="stacked">Email</label>
+                <input placeholder="Email" type="email" fill="outline" class="form-input" [(ngModel)]="email"/>
+            </div>
 
-        <ion-input 
-        placeholder="Password" 
-        type="password"
-        fill="outline"
-        class="form-input"
-        [(ngModel)]="password">
-        </ion-input>
+            <div class="input-group">
+                <label position="stacked">Password</label>
+                <input placeholder="Password" type="password" fill="outline" class="form-input" [(ngModel)]="password"/>
+            </div>
+        </form>
 
         <ion-button expand="block" class="login-Btn" (click)="login()">Log In</ion-button>
         <div class="loginlink" (click)="goToRegister()">
