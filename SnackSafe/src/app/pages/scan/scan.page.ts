@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar,IonButton } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
-import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, doc, getDoc } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
 import { inject } from '@angular/core';
 import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
@@ -65,30 +65,35 @@ async takePhoto() {
       if (result.barcodes.length > 0) {
         const code = result.barcodes[0].rawValue || 'N/A';
   
-        // Example scan result (mocked product info)
-        this.scanResult = {
-          name: 'Sample Product',
-          code,
-          allergens: ['Milk', 'Nuts'] // You can replace with real lookup later
-        };
+        const productAllergens = ['Milk', 'Nuts']
   
         // Step 2: Save scan to Firestore
         const user = this.auth.currentUser;
+        let matchedAllergens: string[] = [];
+
         if (user) {
-          const scansRef = collection(this.firestore, 'users', user.uid, 'scans');
-          await addDoc(scansRef, {
-            ...this.scanResult,
-            timestamp: new Date()
-          });
-          console.log('Scan saved!');
-        }
+          const userDoc = doc(this.firestore, 'users', user.uid);
+          const userSnap = await getDoc(userDoc);
+          const userAllergies = userSnap.exists() ? userSnap.data()['allergens'] || [] : [];
   
-        this.scanError = '';
-  
+          matchedAllergens = productAllergens.filter(a => userAllergies.includes(a));
+
+       const scanData = {
+          name: 'Sample Product', // 🔁 Replace with actual name if possible
+          code,
+          allergens: matchedAllergens.length ? matchedAllergens : ['None detected'],
+          timestamp: new Date()
+        };
+
+        this.scanResult = scanData;
+
         // Step 3: Navigate to results with scan data
         this.router.navigateByUrl('/results', {
           state: { product: this.scanResult }
         });
+
+        this.scanError = '';
+      }
   
       } else {
         this.scanError = 'No barcode found.';
