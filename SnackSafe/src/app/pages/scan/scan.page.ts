@@ -77,20 +77,29 @@ export class ScanPage {
   
           matchedAllergens = productAllergens.filter(a => userAllergies.includes(a));
 
+
+          const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`);
+          const data = await response.json();
+
+          if (data.status === 1) {
+            const productName = data.product.product_name || 'Unnamed Product';
+            const ingredients = data.product.ingredients_text || '';
+            const allergens = (data.product.allergens_tags || []).map((a: string) => a.replace('en:', ''));
+
           this.scanResult = {
-          name: 'Sample Product',
+          name: productName,
           code,
           allergens: matchedAllergens.length ? matchedAllergens : ['None detected'],
         };
-        
 
-        // Step 3: Navigate to results with scan data
-        this.router.navigateByUrl('/results', {
+          this.router.navigateByUrl('/results', {
           state: { product: this.scanResult }
         });
-        
+            this.scanError = '';
 
-        this.scanError = '';
+      } else {
+        this.scanError = 'Product not found in the database.';
+      }
       }
     } catch (decodeErr) {
       console.error('Barcode decoding failed:', decodeErr);
