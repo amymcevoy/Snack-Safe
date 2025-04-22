@@ -10,6 +10,7 @@ import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { getStorage, ref, uploadString, getDownloadURL } from 'firebase/storage';
+import { BrowserMultiFormatReader } from '@zxing/browser';
 
 @Component({
   selector: 'app-scan',
@@ -33,44 +34,42 @@ export class ScanPage {
   private router = inject(Router);
   private auth = inject(Auth);
   private firestore = inject(Firestore);
-  photo: string | null = null;
 
-async takePhoto() {
-  try {
-    const image = await Camera.getPhoto({
+ async scanBarcode(){
+
+    try{      
+    // Open camera and get a photo
+      const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Camera
-    });
+      });
 
-    if (image.dataUrl) {
-      this.photo = image.dataUrl;
-      console.log('Photo captured!');
-      await this.uploadImage(image.dataUrl);
-    } else {
-      this.photo = null; // Handle undefined case
-    }
-  } catch (err) {
-    console.error('Camera error:', err);
-  }
-}
+      if (!image.dataUrl) {
+        this.scanError = 'No image captured.';
+        return;
+      }
 
+      const reader = new BrowserMultiFormatReader();
+      const img = new Image();
+      
+      img.onload = async () => {
+        try{
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) throw new Error('Canvas context is null');
+      
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      
+          const result = await reader.decodeFromCanvas(canvas);
+          const code = result.getText();
+          const productAllergens = ['Milk', 'Nuts'];
+          const user = this.auth.currentUser;
+          let matchedAllergens: string[] = [];
   
- async scanBarcode(){
-
-    try{      
-      const result = await BarcodeScanner.scan();
-
-      if (result.barcodes.length > 0) {
-        const code = result.barcodes[0].rawValue || 'N/A';
-  
-        const productAllergens = ['Milk', 'Nuts']
-  
-        // Step 2: Save scan to Firestore
-        const user = this.auth.currentUser;
-        let matchedAllergens: string[] = [];
-
         if (user) {
           const userDoc = doc(this.firestore, 'users', user.uid);
           const userSnap = await getDoc(userDoc);
@@ -78,35 +77,41 @@ async takePhoto() {
   
           matchedAllergens = productAllergens.filter(a => userAllergies.includes(a));
 
-       const scanData = {
-          name: 'Sample Product', // 🔁 Replace with actual name if possible
+          this.scanResult = {
+          name: 'Sample Product',
           code,
           allergens: matchedAllergens.length ? matchedAllergens : ['None detected'],
-          timestamp: new Date()
         };
-
-        this.scanResult = scanData;
+        
 
         // Step 3: Navigate to results with scan data
         this.router.navigateByUrl('/results', {
           state: { product: this.scanResult }
         });
+        
 
         this.scanError = '';
       }
-  
-      } else {
-        this.scanError = 'No barcode found.';
-      }
+    } catch (decodeErr) {
+      console.error('Barcode decoding failed:', decodeErr);
+      this.scanError = 'No barcode found in the image.';
+    }
+  };
+
+  img.onerror = () => {
+    console.error('Image failed to load.');
+    this.scanError = 'Image could not be processed.';
+  };
+
+  img.src = image.dataUrl;
   
     } catch (err) {
       console.error(err);
       this.scanResult = null;
       this.scanError = 'Scan failed, try again.';
     }
-
-
   }
+
   goHome() {
     this.router.navigate(['/home']);
   }

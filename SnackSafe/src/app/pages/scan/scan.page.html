@@ -6,18 +6,10 @@
         ← 
       </ion-button>
     
-      <p>Scan Product</p>
-
       <ion-button expand="block" class="scan-Btn" (click)="scanBarcode()">
         Scan Barcode
       </ion-button>
 
-      <ion-button expand="block" color="medium" (click)="takePhoto()">
-        Take Photo
-      </ion-button>
-      
-      <ion-img *ngIf="photo" [src]="photo" class="photo-preview"></ion-img>
-      
 
       <ng-container *ngIf="scanResult as result">
         <div class="scan-result">
