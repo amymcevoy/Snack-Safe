@@ -16,11 +16,18 @@
           <h4>{{ result.name }}</h4>
           <p>Barcode: {{ result.code }}</p>
 
-          <ng-container *ngIf="result.allergens && result.allergens.length > 0">
+          <ng-container *ngIf="result.allergens?.[0] !== 'None detected'">
             <p>
-              <strong>Contains:</strong> {{ result.allergens.join(', ') }}
+              <strong>Contains:</strong> {{ result.allergens?.join(', ') }}
             </p>
           </ng-container>
+
+          <ng-container *ngIf="result.allergens?.[0] !== 'None detected'">
+            <p>
+              <strong>No allergens found. Safe to eat!:</strong> {{ result.allergens?.join(', ') }}
+            </p>
+          </ng-container>
+
         </div>
       </ng-container>
 

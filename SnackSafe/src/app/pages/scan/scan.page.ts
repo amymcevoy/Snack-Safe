@@ -41,7 +41,7 @@ export class ScanPage {
     try{      
     // Open camera and get a photo
       const image = await Camera.getPhoto({
-      quality: 90,
+      quality: 100,
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Camera
@@ -79,26 +79,41 @@ export class ScanPage {
           const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`);
           const data = await response.json();
 
-          if (data.status === 1) {
-            const productName = data.product.product_name || 'Unnamed Product';
-            const ingredients = data.product.ingredients_text || '';
-            const allergens = (data.product.allergens_tags || []).map((a: string) => a.replace('en:', ''));
+          if (data.status !== 1) {
+            this.scanError = 'Product not found';
+            return;
+          }
 
-            const user = this.auth.currentUser;
-            let matchedAllergens: string[] = [];
+          const productName = data.product.product_name || 'Unnamed Product';
+      const productAllergensRaw = (data.product.allergens_tags || []).map((a: string) =>
+        a.replace('en:', '').toLowerCase()
+      );
+
+          // Allergen matching map
+          const allergenMap: { [key: string]: string[] } = {
+            dairy: ['milk', 'lactose', 'milkprotein','skimmed milk'],
+            nuts: ['nuts', 'almonds', 'walnuts', 'cashews', 'hazelnuts'],
+            gluten: ['gluten', 'wheat'],
+            soy: ['soy', 'soya'],
+            egg: ['egg'],
+            fish: ['fish'],
+            shellfish: ['shellfish', 'crustaceans'],
+            sesame: ['sesame'],
+            mustard: ['mustard']
+          };
+
+          const user = this.auth.currentUser;
+          let matchedAllergens: string[] = [];
 
       if (user) {
         const userDoc = doc(this.firestore, 'users', user.uid);
         const userSnap = await getDoc(userDoc);
         const userAllergies = userSnap.exists() ? userSnap.data()['allergens'] || [] : [];
-        matchedAllergens = allergens.filter((a: string) => userAllergies.includes(a));
 
-        const debugInfo = `
-        Product Allergens: ${allergens.join(', ')}
-        User Allergies: ${userAllergies.join(', ')}
-        Matched Allergens: ${matchedAllergens.join(', ')}`;
-
-      }
+        matchedAllergens = userAllergies.filter((userAllergen: string) => {
+          const aliases = allergenMap[userAllergen.toLowerCase()] || [];
+          return aliases.some(alias => productAllergensRaw.includes(alias));
+        });
 
           this.scanResult = {
           name: productName,
