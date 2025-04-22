@@ -27,6 +27,7 @@ export class ScanPage {
     name: string;
     code: string;
     allergens?: string[];
+    debugInfo?: string;
   } | null = null;
   
   scanError: string = '';
@@ -91,6 +92,12 @@ export class ScanPage {
         const userSnap = await getDoc(userDoc);
         const userAllergies = userSnap.exists() ? userSnap.data()['allergens'] || [] : [];
         matchedAllergens = allergens.filter((a: string) => userAllergies.includes(a));
+
+        const debugInfo = `
+        Product Allergens: ${allergens.join(', ')}
+        User Allergies: ${userAllergies.join(', ')}
+        Matched Allergens: ${matchedAllergens.join(', ')}`;
+
       }
 
           this.scanResult = {

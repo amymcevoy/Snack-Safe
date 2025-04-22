@@ -17,6 +17,10 @@
         ✅ No allergens found. Safe to eat!
       </div>
 
+      <div *ngIf="product.debugInfo" class="debug-box">
+        <pre>{{ product.debugInfo }}</pre>
+      </div>
+
       <ion-button expand="block" class="back-Btn" (click)="goBack()">
         Scan Another
       </ion-button>
