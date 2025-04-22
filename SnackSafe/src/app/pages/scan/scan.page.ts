@@ -54,6 +54,7 @@ export class ScanPage {
       const reader = new BrowserMultiFormatReader();
       const img = new Image();
       
+      const code = await new Promise<string>((resolve, reject) => {
       img.onload = async () => {
         try{
           const canvas = document.createElement('canvas');
@@ -63,21 +64,17 @@ export class ScanPage {
           if (!ctx) throw new Error('Canvas context is null');
       
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      
+
           const result = await reader.decodeFromCanvas(canvas);
-          const code = result.getText();
-          const productAllergens = ['Milk', 'Nuts'];
-          const user = this.auth.currentUser;
-          let matchedAllergens: string[] = [];
-  
-        if (user) {
-          const userDoc = doc(this.firestore, 'users', user.uid);
-          const userSnap = await getDoc(userDoc);
-          const userAllergies = userSnap.exists() ? userSnap.data()['allergens'] || [] : [];
-  
-          matchedAllergens = productAllergens.filter(a => userAllergies.includes(a));
+          resolve(result.getText());
+        } catch (decodeErr) {
+          reject('No barcode found in the image.');
+        }
+      };
 
-
+      img.onerror = () => reject('Image could not be processed.');
+      img.src = image.dataUrl!;
+    });
           const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`);
           const data = await response.json();
 
@@ -85,6 +82,16 @@ export class ScanPage {
             const productName = data.product.product_name || 'Unnamed Product';
             const ingredients = data.product.ingredients_text || '';
             const allergens = (data.product.allergens_tags || []).map((a: string) => a.replace('en:', ''));
+
+            const user = this.auth.currentUser;
+            let matchedAllergens: string[] = [];
+
+      if (user) {
+        const userDoc = doc(this.firestore, 'users', user.uid);
+        const userSnap = await getDoc(userDoc);
+        const userAllergies = userSnap.exists() ? userSnap.data()['allergens'] || [] : [];
+        matchedAllergens = allergens.filter((a: string) => userAllergies.includes(a));
+      }
 
           this.scanResult = {
           name: productName,
@@ -97,29 +104,16 @@ export class ScanPage {
         });
             this.scanError = '';
 
-      } else {
+      }  else {
         this.scanError = 'Product not found in the database.';
       }
-      }
-    } catch (decodeErr) {
-      console.error('Barcode decoding failed:', decodeErr);
-      this.scanError = 'No barcode found in the image.';
-    }
-  };
-
-  img.onerror = () => {
-    console.error('Image failed to load.');
-    this.scanError = 'Image could not be processed.';
-  };
-
-  img.src = image.dataUrl;
-  
     } catch (err) {
-      console.error(err);
+      console.error('Scan error:', err);
       this.scanResult = null;
-      this.scanError = 'Scan failed, try again.';
+      this.scanError = typeof err === 'string' ? err : 'Scan failed, try again.';
     }
   }
+
 
   goHome() {
     this.router.navigate(['/home']);
