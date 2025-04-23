@@ -22,18 +22,17 @@
             </p>
           </ng-container>
 
-          <ng-container *ngIf="result.debugInfo" class="alert-box warn">
-            <p>
-              ⚠️ <strong>May contain</strong> {{ result.debugInfo?.join(', ') }}
+          <ng-container *ngIf="result.mayContain?.[0] !== 'None'">
+            <p class="alert-box warn">
+              ⚠️ <strong>May contain</strong> {{ result.mayContain?.join(', ') }}
             </p>
           </ng-container>
           
-          <ng-template #noAllergens>
+          <ng-container *ngIf="result.allergens?.[0] === 'None detected' && result.mayContain?.[0] === 'None'">
             <p  class="alert-box safe">
               <strong>✅ No allergens found. Safe to eat!:</strong> {{ result.allergens?.join(', ') }}
             </p>
-          </ng-template>
-
+          </ng-container>
         </div>
       </ng-container>
 
@@ -41,6 +40,7 @@
       <div class="scan-error" *ngIf="scanError">
         <p>{{ scanError }}</p>
       </div>
+
     </div>
   </div>
 </ion-content>

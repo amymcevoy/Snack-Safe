@@ -9,16 +9,17 @@
       <p><strong>Barcode:</strong> {{ product.code }}</p>
       </div>
 
-      <div *ngIf="product.allergens?.length && product.allergens[0] !== 'None detected'" class="alert-box danger">
-         ⚠️ <strong>Allergens detected:</strong> {{ product.allergens.join(', ') }}
-      </div>
 
-      <div *ngIf="product.allergens?.[0] === 'None detected'" class="alert-box safe">
+      <div *ngIf="product.allergens.length" class="alert-box warn">
+          ⚠️ <strong>Contains:</strong> {{ product.allergens.join(', ') }}
+        </div>
+      
+      <div *ngIf="product.mayContain.length" class="alert-box warn">
+          ⚠️ <strong>May contain:</strong> {{ product.mayContain.join(', ') }}
+        </div>
+
+      <div *ngIf="product.allergens?.length && product.mayContain?.length" class="alert-box safe">
         ✅ No allergens found. Safe to eat!
-      </div>
-
-      <div *ngIf="product.debugInfo" class="debug-box">
-        <pre>{{ product.debugInfo }}</pre>
       </div>
 
       <ion-button expand="block" class="back-Btn" (click)="goBack()">
@@ -30,7 +31,6 @@
       <p>No product found. Please try scanning again.</p>
     </ng-template>
 
-    
     </div>
   </div>
 </ion-content>

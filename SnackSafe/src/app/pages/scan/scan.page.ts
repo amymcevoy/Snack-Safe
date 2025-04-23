@@ -27,7 +27,7 @@ export class ScanPage {
     name: string;
     code: string;
     allergens?: string[];
-    debugInfo?: string[];
+    mayContain?: string[];
   } | null = null;
   
   scanError: string = '';
@@ -110,23 +110,24 @@ export class ScanPage {
         const userSnap = await getDoc(userDoc);
         const userAllergies = userSnap.exists() ? userSnap.data()['allergens'] || [] : [];
 
-        contains = userAllergies.filter((userAllergen: string) => {
+          userAllergies.forEach((userAllergen: string) => {
           const aliases = allergenMap[userAllergen.toLowerCase()] || [];
-          return aliases.some(alias => allergensTags.includes(alias));
-        });
 
-        mayContain = userAllergies.filter((userAllergen: string) => {
-          const aliases = allergenMap[userAllergen.toLowerCase()] || [];
-          return (
-            !contains.includes(userAllergen) && aliases.some(alias => tracesTags.includes(alias))
-          );
+          const isInAllergens = aliases.some(alias => allergensTags.includes(alias));
+          const isInTraces = aliases.some(alias => tracesTags.includes(alias));
+
+          if (isInAllergens) {
+            contains.push(userAllergen);
+          } else if (isInTraces) {
+            mayContain.push(userAllergen);
+          }
         });
 
           this.scanResult = {
           name: productName,
           code,
-          allergens: contains,
-          debugInfo: mayContain
+          allergens: contains ,
+          mayContain: mayContain 
         };
 
           this.router.navigateByUrl('/results', {
@@ -143,7 +144,6 @@ export class ScanPage {
       this.scanError = typeof err === 'string' ? err : 'Scan failed, try again.';
     }
   }
-
 
   goHome() {
     this.router.navigate(['/home']);
