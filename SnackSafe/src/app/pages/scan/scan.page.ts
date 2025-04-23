@@ -27,7 +27,7 @@ export class ScanPage {
     name: string;
     code: string;
     allergens?: string[];
-    debugInfo?: string;
+    debugInfo?: string[];
   } | null = null;
   
   scanError: string = '';
@@ -85,10 +85,9 @@ export class ScanPage {
           }
 
           const productName = data.product.product_name || 'Unnamed Product';
-      const productAllergensRaw = (data.product.allergens_tags || []).map((a: string) =>
-        a.replace('en:', '').toLowerCase()
-      );
-
+          const allergensTags = (data.product.allergens_tags || []).map((a: string) => a.replace('en:', '').toLowerCase());
+          const tracesTags = (data.product.traces_tags || []).map((a: string) => a.replace('en:', '').toLowerCase());
+      
           // Allergen matching map
           const allergenMap: { [key: string]: string[] } = {
             dairy: ['milk', 'lactose', 'milkprotein','skimmed milk'],
@@ -103,22 +102,31 @@ export class ScanPage {
           };
 
           const user = this.auth.currentUser;
-          let matchedAllergens: string[] = [];
+          let contains: string[] = [];
+          let mayContain: string[] = [];
 
       if (user) {
         const userDoc = doc(this.firestore, 'users', user.uid);
         const userSnap = await getDoc(userDoc);
         const userAllergies = userSnap.exists() ? userSnap.data()['allergens'] || [] : [];
 
-        matchedAllergens = userAllergies.filter((userAllergen: string) => {
+        contains = userAllergies.filter((userAllergen: string) => {
           const aliases = allergenMap[userAllergen.toLowerCase()] || [];
-          return aliases.some(alias => productAllergensRaw.includes(alias));
+          return aliases.some(alias => allergensTags.includes(alias));
+        });
+
+        mayContain = userAllergies.filter((userAllergen: string) => {
+          const aliases = allergenMap[userAllergen.toLowerCase()] || [];
+          return (
+            !contains.includes(userAllergen) && aliases.some(alias => tracesTags.includes(alias))
+          );
         });
 
           this.scanResult = {
           name: productName,
           code,
-          allergens: matchedAllergens.length ? matchedAllergens : ['None detected'],
+          allergens: contains,
+          debugInfo: mayContain
         };
 
           this.router.navigateByUrl('/results', {

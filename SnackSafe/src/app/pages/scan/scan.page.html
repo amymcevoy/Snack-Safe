@@ -17,16 +17,22 @@
           <p>Barcode: {{ result.code }}</p>
 
           <ng-container *ngIf="result.allergens?.[0] !== 'None detected'">
-            <p>
-              <strong>Contains:</strong> {{ result.allergens?.join(', ') }}
+            <p  class="alert-box warn">
+              ⚠️ <strong>Contains:</strong> {{ result.allergens?.join(', ') }}
             </p>
           </ng-container>
 
-          <ng-container *ngIf="result.allergens?.[0] !== 'None detected'">
+          <ng-container *ngIf="result.debugInfo" class="alert-box warn">
             <p>
-              <strong>No allergens found. Safe to eat!:</strong> {{ result.allergens?.join(', ') }}
+              ⚠️ <strong>May contain</strong> {{ result.debugInfo?.join(', ') }}
             </p>
           </ng-container>
+          
+          <ng-template #noAllergens>
+            <p  class="alert-box safe">
+              <strong>✅ No allergens found. Safe to eat!:</strong> {{ result.allergens?.join(', ') }}
+            </p>
+          </ng-template>
 
         </div>
       </ng-container>
