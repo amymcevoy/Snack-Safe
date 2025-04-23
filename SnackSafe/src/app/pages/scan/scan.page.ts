@@ -28,6 +28,7 @@ export class ScanPage {
     code: string;
     allergens?: string[];
     mayContain?: string[];
+    traceDebug?: string[];
   } | null = null;
   
   scanError: string = '';
@@ -86,17 +87,17 @@ export class ScanPage {
 
           const productName = data.product.product_name || 'Unnamed Product';
           const allergensTags = (data.product.allergens_tags || []).map((a: string) => a.replace('en:', '').toLowerCase());
-          const tracesTags = (data.product.traces_tags || []).map((a: string) => a.replace('en:', '').toLowerCase());
-      
+    
           // Allergen matching map
           const allergenMap: { [key: string]: string[] } = {
             dairy: ['milk', 'lactose', 'milkprotein','skimmed milk'],
             nuts: ['nuts', 'almonds', 'walnuts', 'cashews', 'hazelnuts'],
             gluten: ['gluten', 'wheat'],
-            soy: ['soy', 'soya'],
+            soy: ['soy', 'soya','soybeans'],
+            peanuts: ['peanuts', 'groundnuts'],
             egg: ['egg'],
             fish: ['fish'],
-            shellfish: ['shellfish', 'crustaceans'],
+            shellfish: ['shellfish', 'crustaceans','oyester', 'oyester extract'],
             sesame: ['sesame'],
             mustard: ['mustard']
           };
@@ -110,12 +111,23 @@ export class ScanPage {
         const userSnap = await getDoc(userDoc);
         const userAllergies = userSnap.exists() ? userSnap.data()['allergens'] || [] : [];
 
+        const tracesRaw = (data.product.traces || '').toLowerCase();
+        const tracesList = tracesRaw.split(/[,.;]/).map((s: string) => s.trim().toLowerCase())
+        .filter(Boolean);
+
+        if (tracesRaw.includes('nuts')) {
+          mayContain.push('Nuts');
+        }
+
+        const tracesTags = (data.product.traces_tags || []).map((a: string) => a.replace('en:', '').toLowerCase());
+        const allTraces = new Set([...tracesTags, ...tracesList]);
+
           userAllergies.forEach((userAllergen: string) => {
           const aliases = allergenMap[userAllergen.toLowerCase()] || [];
 
           const isInAllergens = aliases.some(alias => allergensTags.includes(alias));
-          const isInTraces = aliases.some(alias => tracesTags.includes(alias));
-
+          const isInTraces = aliases.some(alias => allTraces.has(alias)|| tracesList.includes(alias));
+          
           if (isInAllergens) {
             contains.push(userAllergen);
           } else if (isInTraces) {
@@ -126,8 +138,9 @@ export class ScanPage {
           this.scanResult = {
           name: productName,
           code,
-          allergens: contains ,
-          mayContain: mayContain 
+          allergens: contains.length ? contains : ['None detected'],
+          mayContain: mayContain.length ? mayContain : ['None'],
+          traceDebug: Array.from(allTraces)
         };
 
           this.router.navigateByUrl('/results', {

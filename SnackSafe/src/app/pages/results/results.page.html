@@ -14,11 +14,11 @@
           ⚠️ <strong>Contains:</strong> {{ product.allergens.join(', ') }}
         </div>
       
-      <div *ngIf="product.mayContain.length" class="alert-box warn">
+      <div *ngIf="product.mayContain && product.mayContain[0] !== 'None'" class="alert-box warn">
           ⚠️ <strong>May contain:</strong> {{ product.mayContain.join(', ') }}
         </div>
 
-      <div *ngIf="product.allergens?.length && product.mayContain?.length" class="alert-box safe">
+      <div *ngIf="product.allergens[0] !== 'None' && product.mayContain[0] !== 'None'" class="alert-box safe">
         ✅ No allergens found. Safe to eat!
       </div>
 

@@ -22,7 +22,7 @@
             </p>
           </ng-container>
 
-          <ng-container *ngIf="result.mayContain?.[0] !== 'None'">
+          <ng-container *ngIf="result.mayContain?.length && result.mayContain?.[0] !== 'None'">
             <p class="alert-box warn">
               ⚠️ <strong>May contain</strong> {{ result.mayContain?.join(', ') }}
             </p>
