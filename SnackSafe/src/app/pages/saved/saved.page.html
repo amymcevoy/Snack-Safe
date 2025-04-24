@@ -8,10 +8,12 @@
       
       <h2>Previously Saved Scans</h2>
 
+      <!--Shows if no scans have been saved-->
       <div *ngIf="previousScans.length === 0" class="empty-msg">
         <p>You haven't scanned anything yet!</p>
       </div>
 
+      <!--List of saved scans-->
       <ion-list class="scan-list" *ngIf="previousScans.length > 0">
         <ion-item *ngFor="let scan of previousScans">
           <ion-label>
@@ -21,6 +23,7 @@
             <p>⚠️ May contain: {{ scan.mayContain?.join(', ') }}</p>
           </ion-label>
 
+          <!--Delete button for each scan-->
           <ion-button class="delete-btn" (click)="deleteScan(scan.id)">
             Delete Scan
           </ion-button>
