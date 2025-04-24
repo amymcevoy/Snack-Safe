@@ -1,3 +1,5 @@
+// All CSS was designed using ChatGpt and We3Schools
+
 .allergy-bg {
     --background: #c5d7d6;
   }
@@ -11,6 +13,7 @@
     box-sizing: border-box;
   }
   
+  /* Styles the form container */
   .form {
     background: #f6f7f7;
     padding: 24px;
@@ -26,6 +29,7 @@
     margin-bottom: 24px;
   }
   
+  /* Removes background from allergen list and adds spacing */
   .allergen-list {
     margin-bottom: 24px;
     background: transparent;

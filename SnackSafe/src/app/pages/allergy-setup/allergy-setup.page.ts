@@ -16,6 +16,7 @@ import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 })
 export class AllergySetupPage{
   
+  // List of most common allergens for user
   allergenList: string[] = [
     'Peanuts',
     'Tree Nuts',
@@ -27,16 +28,19 @@ export class AllergySetupPage{
     'Shellfish'
   ];
   
+  // Tracks which allergies are selected
   selectedAllergens: { [key: string]: boolean } = {};
 
   private auth = inject(Auth);
   private firestore = inject(Firestore);
   private router = inject(Router);
 
+  // Called when page is about to open
   ionViewWillEnter() {
     this.loadAllergens();
   }
 
+  // Saves selected allergens to document in firestore
   async save() {
     const user = this.auth.currentUser;
 
@@ -44,12 +48,16 @@ export class AllergySetupPage{
       console.error('No user logged in.');
       return;
     }
+
+    // Gets only selected allergens
     const chosen = Object.keys(this.selectedAllergens).filter(key => this.selectedAllergens[key]);
 
   try{
     const userDoc = doc(this.firestore, 'users', user.uid);
     await setDoc(userDoc, { allergens: chosen }, { merge: true });
     console.log('Saved allergens:', chosen);
+
+    // Navigates to home after saving
     this.router.navigate(['/home'])
   } catch(error){
     console.error('Failed to save allergens:', error);
@@ -57,6 +65,7 @@ export class AllergySetupPage{
   }
  }
 
+ // Loads previously saved allergens and toggles
  async loadAllergens() {
   const user = this.auth.currentUser;
   if (!user) return;
