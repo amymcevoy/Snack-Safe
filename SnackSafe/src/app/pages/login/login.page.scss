@@ -1,3 +1,5 @@
+// All css was designed using chatgpt and w3schools
+
 :host {
   ion-content.login-bg {
     --background: #c5d7d6;
@@ -81,10 +83,12 @@
     font-weight: 500;
   }
 
+  // Makes sure content can be interacted with
   ion-content {
     pointer-events: auto !important;
   }
 
+  // Fix color and interactiity for ion-input
   ion-input::part(native) {
     color: #092c3e !important;
     pointer-events: auto !important;

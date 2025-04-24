@@ -5,18 +5,23 @@
             <h2 class="form-title">Welcome Back</h2>
 
         <form>
+            <!--Email input field-->
             <div class="input-group">
                 <label position="stacked">Email</label>
                 <input placeholder="Email" type="email" fill="outline" class="form-input" [(ngModel)]="email"/>
             </div>
 
+            <!--Password input field-->
             <div class="input-group">
                 <label position="stacked">Password</label>
                 <input placeholder="Password" type="password" fill="outline" class="form-input" [(ngModel)]="password"/>
             </div>
         </form>
 
+        <!--Logs user in if credentials are correct-->
         <ion-button expand="block" class="login-Btn" (click)="login()">Log In</ion-button>
+
+        <!--Text link that navigates to register page-->
         <div class="loginlink" (click)="goToRegister()">
             Don’t have an account? <span class="link">Register</span>
         </div>
