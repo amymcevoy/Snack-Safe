@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
 import { inject } from '@angular/core';
+import { onAuthStateChanged } from 'firebase/auth';
 
 @Component({
   selector: 'app-saved',
@@ -24,19 +25,22 @@ export class SavedPage {
   private firestore = inject(Firestore);
   private route = inject(Router);
   
-  ionViewWillEnter() {
-    this.loadScans();
+  ngOnInit() {
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        this.loadScans(user.uid);
+      } else {
+        console.warn('User not logged in');
+      }
+    });
   }
 
   goHome() {
     this.route.navigate(['/home']);
   }
 
-  async loadScans() {
-    const user = this.auth.currentUser;
-    if (!user) return;
-
-    const scansRef = collection(this.firestore, 'users', user.uid, 'scans');
+  async loadScans(uid: string) {
+    const scansRef = collection(this.firestore, 'users', uid, 'scans');
     const snapshot = await getDocs(scansRef);
 
     this.previousScans = snapshot.docs.map(doc => doc.data());

@@ -6,24 +6,22 @@
         ← 
       </ion-button>
       
-      <h2>Previous Scans</h2>
+      <h2>Previously Saved Scans</h2>
+
+      <div *ngIf="previousScans.length === 0" class="empty-msg">
+        <p>You haven't scanned anything yet!</p>
 
       <ion-list class="scan-list" *ngIf="previousScans.length > 0">
-        <ion-item *ngFor="let item of previousScans">
+        <ion-item *ngFor="let scan of previousScans">
           <ion-label>
-            <h3>{{ item.name }}</h3>
-            <p> {{ item.date }}</p>
-
-            <p *ngIf="item.allergens?.length">
-               Contains: {{ item.allergens.join(', ') }}
-            </p>
-
+            <h3>{{ scan.name }}</h3>
+            <p>📦 Barcode: {{ scan.code }}</p>
+            <p>⚠️ Contains: {{ scan.allergens?.join(', ') }}</p>
+            <p>⚠️ May contain: {{ scan.mayContain?.join(', ') }}</p>
           </ion-label>
         </ion-item>
       </ion-list>
 
-      <div *ngIf="previousScans.length === 0" class="empty-msg">
-        <p>You haven't scanned anything yet.</p>
       </div>
     </div>
   </div>
