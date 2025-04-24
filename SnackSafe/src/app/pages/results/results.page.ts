@@ -16,6 +16,8 @@ import { Auth } from '@angular/fire/auth';
 })
 
 export class ResultsPage {
+
+  // Product data received from navigation
   product: any;
 
   private router = inject(Router);
@@ -23,10 +25,13 @@ export class ResultsPage {
   private auth = inject(Auth);
 
   constructor(){
+
+    // Retrieve data
     const nav = this.router.getCurrentNavigation();
     this.product = nav?.extras.state?.['product'] || history.state['product'];
   }
 
+  // Save scanned product to firestore under users name
   async saveScan() {
     const user = this.auth.currentUser;
     if (!user || !this.product) return;
@@ -35,8 +40,10 @@ export class ResultsPage {
       const scansRef = collection(this.firestore, 'users', user.uid, 'scans');
       await addDoc(scansRef, {
         ...this.product,
-        savedAt: new Date()
+        savedAt: new Date() // Adds timestamp
       });
+
+      // Alert if successfull or not
       alert('✅ Scan saved successfully!');
       this.router.navigateByUrl('/scan');
     } catch (err) {
@@ -45,6 +52,7 @@ export class ResultsPage {
     }
   }
   
+  // Back to scan page
   goBack() {
     this.router.navigateByUrl('/scan');
   }

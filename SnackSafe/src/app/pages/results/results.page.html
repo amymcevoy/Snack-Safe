@@ -5,32 +5,40 @@
 
       <ng-container *ngIf="product">
       <div class="product-info">
+
+      <!--Display product info-->
       <p><strong>{{ product.name }}</strong></p>
       <p><strong>Barcode:</strong> {{ product.code }}</p>
       </div>
 
+      <!--Shows if allergens are detected-->
       <div *ngIf="product.allergens?.[0] !== 'None detected'" class="alert-box danger">
           ⚠️ <strong>Contains:</strong> {{ product.allergens.join(', ') }}
         </div>
       
+        <!--Shows if traces are detected-->
       <div *ngIf="product.mayContain[0] !== 'None'" class="alert-box warn">
           ⚠️ <strong>May contain:</strong> {{ product.mayContain.join(', ') }}
         </div>
 
+        <!--Shows if no allergens are detected-->
       <div *ngIf="product.allergens[0] === 'None detected' && product.mayContain[0] === 'None detected'" class="alert-box safe">
         ✅ No allergens found. Safe to eat!
       </div>
 
+      <!--To scan another barcode-->
       <ion-button expand="block" class="back-Btn" (click)="goBack()">
         Scan Another
       </ion-button>
-      
+
+      <!--Saves scan-->
       <ion-button expand="block" class="save-btn" (click)="saveScan()">
          Save Scan
       </ion-button>
       
     </ng-container>
 
+    <!--Fallback message-->
     <ng-template #noProduct>
       <p>No product found. Please try scanning again.</p>
     </ng-template>
