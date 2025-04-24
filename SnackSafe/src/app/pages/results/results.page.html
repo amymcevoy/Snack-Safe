@@ -17,10 +17,14 @@
           ⚠️ <strong>May contain:</strong> {{ product.mayContain.join(', ') }}
         </div>
 
-      <div *ngIf="product.allergens[0] !== 'None' && product.mayContain[0] !== 'None'" class="alert-box safe">
+      <div *ngIf="product.allergens[0] === 'None detected' && product.mayContain[0] === 'None detected'" class="alert-box safe">
         ✅ No allergens found. Safe to eat!
       </div>
 
+      <div *ngIf="product.traceDebug?.length">
+        <p><strong>Raw trace terms:</strong> {{ product.traceDebug.join(', ') }}</p>
+      </div>
+      
       <ion-button expand="block" class="back-Btn" (click)="goBack()">
         Scan Another
       </ion-button>
