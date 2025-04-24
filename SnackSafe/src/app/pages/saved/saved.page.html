@@ -21,7 +21,7 @@
             <p>⚠️ May contain: {{ scan.mayContain?.join(', ') }}</p>
           </ion-label>
 
-          <ion-button  (click)="deleteScan(scan.id)">
+          <ion-button class="delete-btn" (click)="deleteScan(scan.id)">
             Delete Scan
           </ion-button>
 

@@ -65,5 +65,20 @@
     font-size: xx-large;
   }
   
+  .delete-btn {
+    position: relative;
+    font-size: 1rem;
+    font-weight: 500;
+    height: 36px;
+    padding: 0 14px;
+    border-radius: 8px;
+    --color: #fff;
+    --background: #092c3e; 
+    --background-hover: #021823;
+    --background-activated: #02141e;
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+  }
+  
   
   
