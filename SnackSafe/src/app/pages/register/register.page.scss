@@ -1,3 +1,5 @@
+// All css was designed using chatgpt and w3schools
+
 :host {
   ion-content.register-bg {
     --background: #c5d7d6;
@@ -79,6 +81,7 @@
     text-decoration: underline;
   }
 
+  // Make sure content is interactive
   ion-content {
     pointer-events: auto !important;
   }
@@ -88,6 +91,7 @@
     --highlight-color-focused: #092c3e;
   }
 
+  // Fixes input appearance
   ion-input::part(native){
     color: #092c3e !important;
     background: #fff !important;

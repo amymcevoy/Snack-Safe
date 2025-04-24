@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 
 export class RegisterPage {
 
+  // Input fields for credentials
   name: string = '';
   email: string = '';
   password: string = '';
@@ -26,6 +27,7 @@ export class RegisterPage {
 
   showForm = false;
 
+  // Fix non ion-input access and styling issues
   ionViewDidEnter() {
     const inputs = document.querySelectorAll('ion-input input');
     inputs.forEach((el: any) => {
@@ -48,7 +50,7 @@ export class RegisterPage {
     });
   }
   
-
+// Registers user with firebase auth 
   async register() {
 
     if (!this.name || !this.email || !this.password) {
@@ -60,7 +62,7 @@ export class RegisterPage {
       const userCredential = await createUserWithEmailAndPassword(this.auth, this.email, this.password);
       const user = userCredential.user;
 
-      // Save user data to Firestore
+      // Saves user name to Firestore
       const userDoc = doc(this.firestore, 'users', user.uid);
       await setDoc(userDoc, { name: this.name }, { merge: true });
 
@@ -72,10 +74,12 @@ export class RegisterPage {
     }
   }
 
+  // Navigate to login
   goToLogin() {
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 
+  // Event handlers for input changes
   onEmailChange(event: any) {
     this.email = event.target.value;
   }

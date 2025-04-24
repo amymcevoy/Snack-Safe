@@ -5,22 +5,26 @@
 
       <form>
 
+        <!--Input for users name-->
         <div class="input-group">
           <label for="name">Name</label>
           <input placeholder="Name" type="text" [(ngModel)]="name" name="name"/>
         </div>
       
+        <!--Input for users email-->
         <div class="input-group">
           <label for="email">Email</label>
           <input placeholder="Email" type="text" [(ngModel)]="email" name="email" />
         </div>
       
+        <!--Input for users password-->
         <div class="input-group">
           <label for="password">Password</label>
           <input placeholder="Password" type="text" [(ngModel)]="password" name="password" />
         </div>
       </form>
       
+      <!--Button to submit form-->
       <ion-button class="register-Btn" expand="block" (click)="register()">Register</ion-button>
 
       <div class="loginlink">
