@@ -9,12 +9,11 @@
       <p><strong>Barcode:</strong> {{ product.code }}</p>
       </div>
 
-
-      <div *ngIf="product.allergens.length" class="alert-box warn">
+      <div *ngIf="product.allergens?.[0] !== 'None detected'" class="alert-box warn">
           ⚠️ <strong>Contains:</strong> {{ product.allergens.join(', ') }}
         </div>
       
-      <div *ngIf="product.mayContain && product.mayContain[0] !== 'None'" class="alert-box warn">
+      <div *ngIf="product.mayContain[0] !== 'None'" class="alert-box warn">
           ⚠️ <strong>May contain:</strong> {{ product.mayContain.join(', ') }}
         </div>
 

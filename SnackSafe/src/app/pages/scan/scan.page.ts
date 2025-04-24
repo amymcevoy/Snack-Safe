@@ -88,18 +88,28 @@ export class ScanPage {
           const productName = data.product.product_name || 'Unnamed Product';
           const allergensTags = (data.product.allergens_tags || []).map((a: string) => a.replace('en:', '').toLowerCase());
     
+          const rawTraceTags = (data.product.traces_tags || []).map((tag: string) =>
+            tag.replace('en:', '').replace(/[-_]/g, ' ').toLowerCase()
+          );
+      
+          const tracesRaw = (data.product.traces || '').toLowerCase();
+          const tracesList = tracesRaw
+            .split(/[,.;]/)
+            .map((s: string) => s.trim().toLowerCase().replace(/[-_]/g, ' '))
+            .filter(Boolean);
+      
+          const combinedTraces = [...rawTraceTags, ...tracesList];
+      
           // Allergen matching map
           const allergenMap: { [key: string]: string[] } = {
-            dairy: ['milk', 'lactose', 'milkprotein','skimmed milk'],
-            nuts: ['nuts', 'almonds', 'walnuts', 'cashews', 'hazelnuts'],
-            gluten: ['gluten', 'wheat'],
-            soy: ['soy', 'soya','soybeans'],
-            peanuts: ['peanuts', 'groundnuts'],
-            egg: ['egg'],
-            fish: ['fish'],
-            shellfish: ['shellfish', 'crustaceans','oyester', 'oyester extract'],
-            sesame: ['sesame'],
-            mustard: ['mustard']
+            'dairy': ['milk', 'lactose', 'milkprotein','skimmed milk','cheese', 'butter', 'cream'],
+            'tree nuts': ['nuts', 'almonds', 'walnuts', 'cashews', 'hazelnuts','pecans', 'pistachios', 'macadamia'],
+            'gluten': ['gluten', 'wheat','barley', 'rye', 'spelt'],
+            'soy': ['soy', 'soya','soybeans','soy lecithin'],
+            'peanuts': ['peanuts', 'groundnuts'],
+            'egg': ['egg','eggwhite', 'egg yolk'],
+            'fish': ['fish','anchovy', 'salmon', 'tuna', 'cod'],
+            'shellfish': ['shellfish', 'crustaceans','oyester', 'oyester-extract','shrimp', 'lobster', 'crab'],
           };
 
           const user = this.auth.currentUser;
@@ -111,22 +121,11 @@ export class ScanPage {
         const userSnap = await getDoc(userDoc);
         const userAllergies = userSnap.exists() ? userSnap.data()['allergens'] || [] : [];
 
-        const tracesRaw = (data.product.traces || '').toLowerCase();
-        const tracesList = tracesRaw.split(/[,.;]/).map((s: string) => s.trim().toLowerCase())
-        .filter(Boolean);
-
-        if (tracesRaw.includes('nuts')) {
-          mayContain.push('Nuts');
-        }
-
-        const tracesTags = (data.product.traces_tags || []).map((a: string) => a.replace('en:', '').toLowerCase());
-        const allTraces = new Set([...tracesTags, ...tracesList]);
-
           userAllergies.forEach((userAllergen: string) => {
           const aliases = allergenMap[userAllergen.toLowerCase()] || [];
 
           const isInAllergens = aliases.some(alias => allergensTags.includes(alias));
-          const isInTraces = aliases.some(alias => allTraces.has(alias)|| tracesList.includes(alias));
+          const isInTraces = aliases.some(alias => combinedTraces.includes(alias));
           
           if (isInAllergens) {
             contains.push(userAllergen);
@@ -140,7 +139,6 @@ export class ScanPage {
           code,
           allergens: contains.length ? contains : ['None detected'],
           mayContain: mayContain.length ? mayContain : ['None'],
-          traceDebug: Array.from(allTraces)
         };
 
           this.router.navigateByUrl('/results', {
