@@ -23,6 +23,7 @@ import { BrowserMultiFormatReader } from '@zxing/browser';
 
 export class ScanPage {
 
+  // Holds result of a scan
   scanResult: {
     name: string;
     code: string;
@@ -31,16 +32,18 @@ export class ScanPage {
     traceDebug?: string[];
   } | null = null;
   
+  // Holds error message
   scanError: string = '';
 
   private router = inject(Router);
   private auth = inject(Auth);
   private firestore = inject(Firestore);
 
+ // Scans barcode using camera 
  async scanBarcode(){
 
     try{      
-    // Open camera and get a photo
+    // Open camera and get a photo as data URL
       const image = await Camera.getPhoto({
       quality: 100,
       allowEditing: false,
@@ -53,6 +56,7 @@ export class ScanPage {
         return;
       }
 
+      // Decode the barcode from image
       const reader = new BrowserMultiFormatReader();
       const img = new Image();
       
@@ -77,6 +81,8 @@ export class ScanPage {
       img.onerror = () => reject('Image could not be processed.');
       img.src = image.dataUrl!;
     });
+
+          // Fetchs product info from open food facts
           const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`);
           const data = await response.json();
 
@@ -85,6 +91,7 @@ export class ScanPage {
             return;
           }
 
+          // Process allergen data
           const productName = data.product.product_name || 'Unnamed Product';
           const allergensTags = (data.product.allergens_tags || []).map((a: string) => a.replace('en:', '').toLowerCase());
     
@@ -100,7 +107,7 @@ export class ScanPage {
       
           const combinedTraces = [...rawTraceTags, ...tracesList];
       
-          // Allergen matching map
+          // Allergen map for detection
           const allergenMap: { [key: string]: string[] } = {
             'dairy': ['milk', 'lactose', 'milkprotein','skimmed milk','cheese', 'butter', 'cream'],
             'tree nuts': ['nuts', 'almonds', 'walnuts', 'cashews', 'hazelnuts','pecans', 'pistachios', 'macadamia'],
@@ -116,6 +123,7 @@ export class ScanPage {
           let contains: string[] = [];
           let mayContain: string[] = [];
 
+      // Compares allergens to users selection
       if (user) {
         const userDoc = doc(this.firestore, 'users', user.uid);
         const userSnap = await getDoc(userDoc);
@@ -134,6 +142,7 @@ export class ScanPage {
           }
         });
 
+          // Stores scan result
           this.scanResult = {
           name: productName,
           code,
@@ -141,6 +150,7 @@ export class ScanPage {
           mayContain: mayContain.length ? mayContain : ['None'],
         };
 
+        // Navigates to results page
           this.router.navigateByUrl('/results', {
           state: { product: this.scanResult }
         });
@@ -156,14 +166,17 @@ export class ScanPage {
     }
   }
 
+  // Navigate back home
   goHome() {
     this.router.navigate(['/home']);
   }
 
+  // Navigate to saved scans
   goToSaved(){
     this.router.navigate(['/saved']);
   }
 
+  // Uploads image to firebase storage and link to scan result
   async uploadImage(dataUrl: string) {
     try {
       const storage = getStorage();
@@ -176,7 +189,7 @@ export class ScanPage {
       const url = await getDownloadURL(uploadResult.ref);
       console.log('Image uploaded to Firebase Storage:', url);
   
-      // Optionally, save this URL to Firestore along with scan data
+      // Saves this URL to Firestore along with scan data
       if (this.scanResult) {
         const user = this.auth.currentUser;
         if (user) {

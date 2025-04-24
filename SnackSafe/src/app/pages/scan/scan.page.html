@@ -2,19 +2,22 @@
   <div class="center-wrapper">    
     <div class="form">
       
+    <!--Back button to home-->
       <ion-button class="return-btn-top" fill="clear" (click)="goHome()">
         ← 
       </ion-button>
     
+      <!--Button to trigger barcode scan-->
       <ion-button expand="block" class="scan-Btn" (click)="scanBarcode()">
         Scan Barcode
       </ion-button>
 
+      <!--Button to veiw saved scans-->
       <ion-button expand="block" class="save-Btn" (click)="goToSaved()">
         Previous Scans
       </ion-button>
 
-      <!-- Error message -->
+      <!--Error message-->
       <div class="scan-error" *ngIf="scanError">
         <p>{{ scanError }}</p>
       </div>
