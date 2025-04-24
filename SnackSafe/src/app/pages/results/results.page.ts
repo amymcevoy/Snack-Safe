@@ -38,9 +38,10 @@ export class ResultsPage {
         savedAt: new Date()
       });
       alert('✅ Scan saved successfully!');
+      this.router.navigateByUrl('/scan');
     } catch (err) {
       console.error('Save failed:', err);
-      alert('❌ Failed to save scan.');
+      alert(' Failed to save scan.');
     }
   }
   

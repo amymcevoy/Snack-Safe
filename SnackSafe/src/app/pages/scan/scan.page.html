@@ -10,31 +10,9 @@
         Scan Barcode
       </ion-button>
 
-
-      <ng-container *ngIf="scanResult as result">
-        <div class="scan-result">
-          <h4>{{ result.name }}</h4>
-          <p>Barcode: {{ result.code }}</p>
-
-          <ng-container *ngIf="result.allergens?.[0] !== 'None detected'">
-            <p  class="alert-box warn">
-              ⚠️ <strong>Contains:</strong> {{ result.allergens?.join(', ') }}
-            </p>
-          </ng-container>
-
-          <ng-container *ngIf="result.mayContain?.length && result.mayContain?.[0] !== 'None'">
-            <p class="alert-box warn">
-              ⚠️ <strong>May contain</strong> {{ result.mayContain?.join(', ') }}
-            </p>
-          </ng-container>
-          
-          <ng-container *ngIf="result.allergens?.[0] === 'None detected' && result.mayContain?.[0] === 'None'">
-            <p  class="alert-box safe">
-              <strong>✅ No allergens found. Safe to eat!:</strong> {{ result.allergens?.join(', ') }}
-            </p>
-          </ng-container>
-        </div>
-      </ng-container>
+      <ion-button expand="block" class="save-Btn" (click)="goToSaved()">
+        Previous Scans
+      </ion-button>
 
       <!-- Error message -->
       <div class="scan-error" *ngIf="scanError">

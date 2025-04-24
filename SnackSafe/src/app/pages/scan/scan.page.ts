@@ -160,6 +160,10 @@ export class ScanPage {
     this.router.navigate(['/home']);
   }
 
+  goToSaved(){
+    this.router.navigate(['/saved']);
+  }
+
   async uploadImage(dataUrl: string) {
     try {
       const storage = getStorage();
