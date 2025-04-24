@@ -68,7 +68,7 @@ export class RegisterPage {
       this.router.navigateByUrl('/allergy-setup', { replaceUrl: true });
 
     } catch (error: any) {
-      console.error('Registration failed:', error.message);
+      alert(`Registration Failed Please Try Again!`);
     }
   }
 

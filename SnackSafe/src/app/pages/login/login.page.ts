@@ -19,8 +19,6 @@ export class LoginPage {
 
     private auth = inject(Auth);
     private router = inject(Router);
-    private alertCtrl = inject(AlertController);
-
 
     async login(){
         try {
@@ -40,18 +38,10 @@ export class LoginPage {
               message = 'Invalid email address.';
             }
             
-            this.showError(message);
+            alert(`Login Failed , Email or Password is incorrect!`);
         }
     }
 
-    async showError(message: string) {
-        const alert = await this.alertCtrl.create({
-          header: 'Login Failed',
-          message,
-          buttons: ['OK']
-        });
-        await alert.present();
-      }
 
     goToRegister() {
         this.router.navigate(['/register']);
