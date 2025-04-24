@@ -16,6 +16,7 @@ import { Auth, signOut } from '@angular/fire/auth';
 
 export class HomePage{
 
+  // Default username placeholder
   userName: string = 'User';
 
   private router = inject(Router);
@@ -26,6 +27,7 @@ export class HomePage{
     this.loadUserName();
   }
 
+  // Fetches users name from firestore
   async loadUserName() {
     const user = this.auth.currentUser;
     if (!user) return;
@@ -38,19 +40,23 @@ export class HomePage{
       this.userName = data['name'] || 'User';
     }
   }
-  
+
+  // Navigates to Scan page
   goToScan() {
     this.router.navigate(['/scan']);
   }
 
+  // Navigates to allergy page
   goToAllergySetup() {
     this.router.navigate(['/allergy-setup']);
   }
 
+  // Navigates to previously scanned page
   goToSaved(){
     this.router.navigate(['/saved']);
   }
 
+  // Logs user out entirely and redirects to auth page
   async logout() {
     
     await signOut(this.auth); 
