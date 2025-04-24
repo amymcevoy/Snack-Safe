@@ -8,6 +8,7 @@ import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
 import { inject } from '@angular/core';
 import { onAuthStateChanged } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 
 @Component({
   selector: 'app-saved',
@@ -19,6 +20,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 export class SavedPage {
 
+  loading: boolean = true;
   previousScans: any[] = [];
 
   private auth = inject(Auth);
@@ -26,12 +28,22 @@ export class SavedPage {
   private route = inject(Router);
   
   ngOnInit() {
-    onAuthStateChanged(this.auth, (user) => {
+    this.waitForAuth().then(user => {
       if (user) {
-        this.loadScans(user.uid);
+         this.loadScans(user.uid);
       } else {
         console.warn('User not logged in');
       }
+    });
+  }
+
+  waitForAuth(): Promise<any> {
+    const auth = getAuth();
+    return new Promise(resolve => {
+      const unsubscribe = onAuthStateChanged(auth, user => {
+        unsubscribe(); // Stop listening after first result
+        resolve(user);
+      });
     });
   }
 
@@ -40,9 +52,12 @@ export class SavedPage {
   }
 
   async loadScans(uid: string) {
+    this.loading = true;
+
     const scansRef = collection(this.firestore, 'users', uid, 'scans');
     const snapshot = await getDocs(scansRef);
 
     this.previousScans = snapshot.docs.map(doc => doc.data());
+    this.loading = false;
   }
 }

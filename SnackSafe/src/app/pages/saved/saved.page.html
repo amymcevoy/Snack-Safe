@@ -10,6 +10,7 @@
 
       <div *ngIf="previousScans.length === 0" class="empty-msg">
         <p>You haven't scanned anything yet!</p>
+      </div>
 
       <ion-list class="scan-list" *ngIf="previousScans.length > 0">
         <ion-item *ngFor="let scan of previousScans">
@@ -21,8 +22,6 @@
           </ion-label>
         </ion-item>
       </ion-list>
-
-      </div>
     </div>
   </div>
 
