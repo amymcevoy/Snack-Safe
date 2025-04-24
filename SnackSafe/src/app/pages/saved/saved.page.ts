@@ -9,6 +9,8 @@ import { Auth } from '@angular/fire/auth';
 import { inject } from '@angular/core';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
+import { doc, deleteDoc } from '@angular/fire/firestore';
+
 
 @Component({
   selector: 'app-saved',
@@ -57,7 +59,26 @@ export class SavedPage {
     const scansRef = collection(this.firestore, 'users', uid, 'scans');
     const snapshot = await getDocs(scansRef);
 
-    this.previousScans = snapshot.docs.map(doc => doc.data());
+    this.previousScans = snapshot.docs.map(doc => ({
+      id: doc.id,           // 🔥 Needed to delete the correct document
+      ...doc.data()
+    }));
     this.loading = false;
+  }
+
+  async deleteScan(scanId: string) {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (!user) return;
+  
+    const scanDocRef = doc(this.firestore, 'users', user.uid, 'scans', scanId);
+  
+    try {
+      await deleteDoc(scanDocRef);
+      this.previousScans = this.previousScans.filter(scan => scan.id !== scanId);
+      console.log('Scan deleted:', scanId);
+    } catch (err) {
+      console.error('Error deleting scan:', err);
+    }
   }
 }

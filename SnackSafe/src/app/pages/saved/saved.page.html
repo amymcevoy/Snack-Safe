@@ -20,6 +20,11 @@
             <p>⚠️ Contains: {{ scan.allergens?.join(', ') }}</p>
             <p>⚠️ May contain: {{ scan.mayContain?.join(', ') }}</p>
           </ion-label>
+
+          <ion-button  (click)="deleteScan(scan.id)">
+            Delete Scan
+          </ion-button>
+
         </ion-item>
       </ion-list>
     </div>
