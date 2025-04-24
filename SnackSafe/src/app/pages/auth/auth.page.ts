@@ -14,10 +14,12 @@ import {CommonModule} from '@angular/common';
 export class AuthPage {
   constructor(private router: Router) {}
 
+  // Navigates to Login
   goToLogin() {
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 
+  // Navigates to Register
   goToRegister() {
     this.router.navigateByUrl('/register', { replaceUrl: true });
 

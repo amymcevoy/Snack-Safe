@@ -1,12 +1,14 @@
 <ion-content class="ion-padding home-bg">
-<div class="logo-wrapper">
-  <img src="assets/SnackSafeLogo.png" alt="SnackSafe Logo" class="logo-img"/>
-</div>
 
-<!--<p class="message">Helping you snack smarter — one scan at a time.</p>-->
+    <div class="logo-wrapper">
+      <img src="assets/SnackSafeLogo.png" alt="SnackSafe Logo" class="logo-img"/>
+    </div>
+    
+    <!--Navigates to register page-->
+    <ion-button expand="block" class="AccountBtn" (click)="goToRegister()">Create Account</ion-button>
 
-<ion-button expand="block" class="AccountBtn" (click)="goToRegister()">Create Account</ion-button>
-<div class="loginlink"(click)="goToLogin()">Already have an account? <span class="link">Login</span>
+    <!--Navigates to login page-->
+    <div class="loginlink"(click)="goToLogin()">Already have an account? <span class="link">Login</span>
   </div>
-  </ion-content>
+</ion-content>
   
