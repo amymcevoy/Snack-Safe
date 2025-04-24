@@ -9,7 +9,7 @@
       <p><strong>Barcode:</strong> {{ product.code }}</p>
       </div>
 
-      <div *ngIf="product.allergens?.[0] !== 'None detected'" class="alert-box warn">
+      <div *ngIf="product.allergens?.[0] !== 'None detected'" class="alert-box danger">
           ⚠️ <strong>Contains:</strong> {{ product.allergens.join(', ') }}
         </div>
       
@@ -21,10 +21,6 @@
         ✅ No allergens found. Safe to eat!
       </div>
 
-      <div *ngIf="product.traceDebug?.length">
-        <p><strong>Raw trace terms:</strong> {{ product.traceDebug.join(', ') }}</p>
-      </div>
-      
       <ion-button expand="block" class="back-Btn" (click)="goBack()">
         Scan Another
       </ion-button>
